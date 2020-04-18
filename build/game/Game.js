@@ -16,6 +16,7 @@ export class Game {
     }
     ;
     start() {
+        this.state.start();
         this.view.onStart();
         this.render();
         this.device.setDeviceMotionEventHandler();

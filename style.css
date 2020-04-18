@@ -1,0 +1,98 @@
+*, html, body {
+    padding: 0;
+    margin: 0;
+}
+
+body {
+    position: relative;
+    height: 100vh;
+    width: 100vw;
+    overflow: hidden;
+}
+
+.gyroscope-data {
+    margin-top: 50px;
+    font-size: 32px;
+    font-weight: bold;
+}
+
+.start-game {
+    position: absolute;
+    top: 50%;
+    left:50%;
+    transform: translate(-50%,-50%);
+    font-size: 48px;
+    font-weight: bold;
+    padding: 40px;
+    z-index: 2;
+}
+
+.invisible {
+    display:none;
+}
+
+.game-canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+}
+
+.rotate-msg,
+.pause-msg,
+.gameover-msg,
+.nextlevel-msg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 3;
+}
+
+.rotate-msg {
+    background-color: #1b8de9;
+}
+
+.pause-msg {
+    background-color: rgba(255, 255, 255, 0.5);
+}
+
+.gameover-msg {
+    background-color: rgba(255, 0, 10, 0.5);
+}
+
+.nextlevel-msg {
+    background-color: rgba(0, 255, 32, 0.5);
+}
+
+.rotate-msg::before,
+.pause-msg::before,
+.gameover-msg::before,
+.nextlevel-msg::before {
+    color: #ffffff;
+    text-transform: uppercase;
+    text-align: center;
+    font-weight: bold;
+    font-size: 32px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.rotate-msg::before {
+    content: 'Please rotate your device to landscape';
+}
+
+.pause-msg::before {
+    content: 'Game is paused. Tap to resume';
+}
+
+.gameover-msg::before {
+    content: 'Game over. Tap to restart';
+}
+
+.nextlevel-msg::before {
+    content: 'You won. Tap to continue next level';
+}

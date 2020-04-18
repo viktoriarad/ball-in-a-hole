@@ -1,0 +1,27 @@
+{
+  "name": "ball-in-a-hole",
+  "version": "0.0.1",
+  "description": "Browser mobile game with using of gyroscope API",
+  "main": "app.js",
+  "scripts": {
+    "build-ts": "tsc"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/viktoriarad/ball-in-a-hole.git"
+  },
+  "keywords": [
+    "game",
+    "gyroscope"
+  ],
+  "author": "Viktoriia Radchenko",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/viktoriarad/ball-in-a-hole/issues"
+  },
+  "homepage": "https://github.com/viktoriarad/ball-in-a-hole#readme",
+  "devDependencies": {
+    "prettier": "2.0.2",
+    "typescript": "^3.8.3"
+  }
+}

@@ -1,11 +1,15 @@
-##Ball in a hole
+<div align="center">
 
-###Opis gry:
+## Ball in a hole
+
+</div>
+
+### Opis gry:
 Gra na smartphone, jedna piłka wiele dziurek. Przejście kulką przez całe pole dziur tak aby trafić w potrzebną. Z każdym kolejnym levelem sterowanie piłką będzie coraz trudniejsze.
 
 Interakcja urzytkownika w grze będzie zaimplementowana przy pomocy Gyroscope Sensor API.
 
-####Przykładowe klasy które będą użyte w aplikacji:
+#### Przykładowe klasy które będą użyte w aplikacji:
 
  - Class **CanvasBoard** - planszówka gry na canvasie, renderuje wszystkie elementy graficzne;
 

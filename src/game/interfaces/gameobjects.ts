@@ -45,7 +45,7 @@ export interface IDevice {
 }
 
 export interface IState {
-  start(): boolean;
+  start(): void;
   pause(): void;
   over(): void;
   win(): void;

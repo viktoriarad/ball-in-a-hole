@@ -15,7 +15,7 @@ export class State {
      * @returns {void}
      */
     start() {
-        return this.state === States.PLAY;
+        this.state = States.PLAY;
     }
     ;
     /**

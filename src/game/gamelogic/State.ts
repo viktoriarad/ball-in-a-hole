@@ -19,8 +19,8 @@ export class State implements IState {
    * Funkcja zmienia stan gry na wystartowany
    * @returns {void}
    */
-  public start(): boolean {
-    return this.state === States.PLAY;
+  public start(): void {
+    this.state = States.PLAY;
   };
 
   /**

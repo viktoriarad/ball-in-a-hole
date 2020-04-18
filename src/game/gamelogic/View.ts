@@ -19,6 +19,8 @@ export class View implements IView {
     this.body = <HTMLBodyElement>document.body;
 
     this.canvas = <HTMLCanvasElement>this.createHTMLElement("canvas");
+    this.canvas.width = this.fieldSize.width;
+    this.canvas.height = this.fieldSize.height;
     this.ctx = <CanvasRenderingContext2D>this.canvas.getContext("2d");
     this.addHTMLElement(this.body, this.canvas);
 
@@ -122,9 +124,9 @@ export class View implements IView {
     const traps: Array<ICircle> = objectsToRender.traps;
     const finish: ICircle = objectsToRender.finish;
 
-    this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+    this.ctx.clearRect(0, 0, this.fieldSize.width, this.fieldSize.height);
     this.ctx.fillStyle = "#00135d";
-    this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+    this.ctx.fillRect(0, 0, this.fieldSize.width, this.fieldSize.height);
 
     traps.forEach((trap) => {
       this.ctx.beginPath();

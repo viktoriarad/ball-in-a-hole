@@ -4,6 +4,8 @@ export class View {
         this.fieldSize = _fieldSize;
         this.body = document.body;
         this.canvas = this.createHTMLElement("canvas");
+        this.canvas.width = this.fieldSize.width;
+        this.canvas.height = this.fieldSize.height;
         this.ctx = this.canvas.getContext("2d");
         this.addHTMLElement(this.body, this.canvas);
         this.rotateMsg = this.createHTMLElement("div", "rotate-msg");
@@ -94,9 +96,9 @@ export class View {
         const ball = objectsToRender.ball;
         const traps = objectsToRender.traps;
         const finish = objectsToRender.finish;
-        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        this.ctx.clearRect(0, 0, this.fieldSize.width, this.fieldSize.height);
         this.ctx.fillStyle = "#00135d";
-        this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+        this.ctx.fillRect(0, 0, this.fieldSize.width, this.fieldSize.height);
         traps.forEach((trap) => {
             this.ctx.beginPath();
             this.ctx.arc(trap.x, trap.y, trap.radius, 0, Math.PI * 2);

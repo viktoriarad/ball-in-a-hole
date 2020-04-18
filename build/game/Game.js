@@ -16,8 +16,8 @@ export class Game {
     }
     ;
     start() {
-        this.state.start();
         this.view.onStart();
+        this.nextLevel();
         this.render();
         this.device.setDeviceMotionEventHandler();
     }

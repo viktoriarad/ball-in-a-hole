@@ -33,8 +33,8 @@ export class Game implements IGame {
   };
 
   start(): void {
-    this.state.start();
     this.view.onStart();
+    this.nextLevel();
     this.render();
     this.device.setDeviceMotionEventHandler();
   }

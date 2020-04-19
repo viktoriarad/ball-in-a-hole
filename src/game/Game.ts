@@ -26,7 +26,7 @@ export class Game implements IGame {
 
     this.state = new State();
     this.level = 0;
-  }
+  };
 
   onPressStartBtn(): void {
     this.device.requestSensorsPermission();
@@ -37,7 +37,7 @@ export class Game implements IGame {
     this.nextLevel();
     this.render();
     this.device.setDeviceMotionEventHandler();
-  }
+  };
 
   /**
    * Funkcja restartuje gre
@@ -51,7 +51,15 @@ export class Game implements IGame {
     this.traps.generateTraps(this.level, this.finish, this.ball);
 
     this.state.start();
-  }
+  };
+
+  resume(): void {
+    this.state.start();
+  };
+
+  pause(): void {
+    this.state.pause();
+  };
 
   /**
    * Funkcja restartuje gre
@@ -60,7 +68,7 @@ export class Game implements IGame {
   restart(): void {
     this.level = 0;
     this.nextLevel();
-  }
+  };
 
   getFieldSize(screenSize: ISize): ISize {
     return {

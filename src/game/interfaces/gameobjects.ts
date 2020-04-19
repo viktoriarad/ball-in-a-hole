@@ -18,6 +18,9 @@ export interface IFinish extends ICircle {
 
 export interface IGame {
   start(): void;
+  resume(): void;
+  nextLevel(): void;
+  restart(): void;
   accelerate(coords: IPosition): void;
   onOrientationChange(): void;
   onPressStartBtn(): void;

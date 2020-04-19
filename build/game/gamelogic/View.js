@@ -52,14 +52,17 @@ export class View {
     ;
     onTouchPauseMsg() {
         this.pauseMsg.classList.add('invisible');
+        this.game.resume();
     }
     ;
     onTouchGameOverMsg() {
         this.gameOverMsg.classList.add('invisible');
+        this.game.restart();
     }
     ;
     onTouchNextLevelMsg() {
         this.nextLevelMsg.classList.add('invisible');
+        this.game.nextLevel();
     }
     ;
     onPressStartGameBtn() {

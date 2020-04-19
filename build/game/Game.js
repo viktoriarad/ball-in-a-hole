@@ -11,6 +11,7 @@ export class Game {
         this.state = new State();
         this.level = 0;
     }
+    ;
     onPressStartBtn() {
         this.device.requestSensorsPermission();
     }
@@ -21,6 +22,7 @@ export class Game {
         this.render();
         this.device.setDeviceMotionEventHandler();
     }
+    ;
     /**
      * Funkcja restartuje gre
      * @returns {void}
@@ -32,6 +34,15 @@ export class Game {
         this.traps.generateTraps(this.level, this.finish, this.ball);
         this.state.start();
     }
+    ;
+    resume() {
+        this.state.start();
+    }
+    ;
+    pause() {
+        this.state.pause();
+    }
+    ;
     /**
      * Funkcja restartuje gre
      * @returns {void}
@@ -40,6 +51,7 @@ export class Game {
         this.level = 0;
         this.nextLevel();
     }
+    ;
     getFieldSize(screenSize) {
         return {
             width: screenSize.width > screenSize.height ? screenSize.width : screenSize.height,

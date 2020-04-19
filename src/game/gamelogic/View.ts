@@ -74,14 +74,17 @@ export class View implements IView {
 
   onTouchPauseMsg(): void {
     this.pauseMsg.classList.add('invisible');
+    this.game.resume();
   };
 
   onTouchGameOverMsg(): void {
     this.gameOverMsg.classList.add('invisible');
+    this.game.restart();
   };
 
   onTouchNextLevelMsg(): void {
     this.nextLevelMsg.classList.add('invisible');
+    this.game.nextLevel();
   };
 
   onPressStartGameBtn(): void {

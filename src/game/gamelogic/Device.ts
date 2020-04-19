@@ -3,7 +3,7 @@ import { IOrientation, ISize, IPosition } from "../interfaces/gametypes.js";
 
 export class Device  implements IDevice {
   private motionPermission: boolean = false;
-  private readonly isiOS: boolean;
+  public readonly isiOS: boolean;
   private readonly screenSize: ISize;
   private readonly game: IGame;
 
@@ -56,6 +56,17 @@ export class Device  implements IDevice {
    */
   public setOrientationChangeEventHandler(): void {
     window.addEventListener('orientationchange', this.onOrientationChange.bind(this));
+  };
+
+  public setDeviceOrientationEventHandler(): void {
+    window.addEventListener('deviceorientation', this.onOrientationEvent.bind(this));
+  };
+
+  private onOrientationEvent(e: DeviceOrientationEvent): void {
+    const x: number = parseFloat((<number>e.beta).toFixed(1));
+    const y: number = parseFloat((<number>e.gamma).toFixed(1));
+
+    this.game.accelerate({ x, y });
   };
 
   /**

@@ -47,6 +47,16 @@ export class Device {
         window.addEventListener('orientationchange', this.onOrientationChange.bind(this));
     }
     ;
+    setDeviceOrientationEventHandler() {
+        window.addEventListener('deviceorientation', this.onOrientationEvent.bind(this));
+    }
+    ;
+    onOrientationEvent(e) {
+        const x = parseFloat(e.beta.toFixed(1));
+        const y = parseFloat(e.gamma.toFixed(1));
+        this.game.accelerate({ x, y });
+    }
+    ;
     /**
      * Funkcja dodaje nasłuchiwanie na ruch urządzenia w trzech wymiarach (x, y, z)
      * @returns {{width: {number}, height: {number}}} Object with width and height.

@@ -127,8 +127,8 @@ export class Game {
         const orientation = this.device.getOrientation();
         const multiplier = orientation.reversed ? -1 : 1;
         this.ball.moveBy({
-            x: coords.x * multiplier * this.level * 0.5,
-            y: coords.y * multiplier * this.level * 0.5
+            x: coords.y * multiplier * this.level * 0.5,
+            y: coords.x * multiplier * this.level * 0.5
         });
         if (this.gotInTrap()) {
             this.gameOver();

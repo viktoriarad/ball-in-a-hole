@@ -150,8 +150,8 @@ export class Game implements IGame {
     const multiplier: number = orientation.reversed ? -1 : 1;
 
     this.ball.moveBy({
-      x: coords.x * multiplier * this.level * 0.5,
-      y: coords.y * multiplier * this.level * 0.5
+      x: coords.y * multiplier * this.level * 0.5,
+      y: coords.x * multiplier * this.level * 0.5
     });
 
     if (this.gotInTrap()) {

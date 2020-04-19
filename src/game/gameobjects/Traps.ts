@@ -9,7 +9,7 @@ export class Traps implements ITraps {
   constructor(_fieldSize: ISize) {
     this.traps = [];
     this.fieldSize = _fieldSize;
-  }
+  };
 
   public checkIfBallGotInside(ball: ICircle): boolean {
     return this.traps.some((trap: ICircle) => {
@@ -17,7 +17,7 @@ export class Traps implements ITraps {
       const y: boolean = Math.abs(trap.y - ball.y) - trap.radius <= 0;
       return x && y;
     });
-  }
+  };
 
   /**
    * Funkcja generuje wszystkie czerwone pulapki
@@ -27,10 +27,12 @@ export class Traps implements ITraps {
     const trapsAmount: number = 5 + level * 2;
     const radius: number = 15 + level;
 
+    this.clearTraps();
+
     for (let i = 0; i <= trapsAmount; i++) {
       this.traps.push(this.generateTrap(radius, finishHole, ball));
     }
-  }
+  };
 
   /**
    * Funkcja generuje pulapke i sprawdza aby sie nie znajdowala zablisko obok innych elementow gry
@@ -64,6 +66,10 @@ export class Traps implements ITraps {
 
   public getAll(): Array<ICircle> {
     return this.traps;
+  };
+
+  private clearTraps(): void {
+    this.traps.length = 0;
   }
 
 }

@@ -1,3 +1,6 @@
+/**
+ * Typ wyliczeniowy States, przechowuje stany gry
+ */
 var States;
 (function (States) {
     States[States["INIT"] = 0] = "INIT";
@@ -6,10 +9,12 @@ var States;
     States[States["WIN"] = 3] = "WIN";
     States[States["OVER"] = 4] = "OVER";
 })(States || (States = {}));
+;
 export class State {
     constructor() {
         this.state = States.INIT;
     }
+    ;
     /**
      * Funkcja zmienia stan gry na wystartowany
      * @returns {void}

@@ -13,11 +13,11 @@ export class Device  implements IDevice {
     this.screenSize = this.defineScreenSize();
 
     this.setOrientationChangeEventHandler();
-  }
+  };
 
   /**
-   * Funkcja prosi o pozwolenie aby sie korzystac z API sensorow
-   * @returns {boolean} True if permission was granted and false if not.
+   * Funkcja prosi o pozwolenie aby sie korzystac z API sensorow urzadzenia.
+   * @returns {boolean} True lub false jesli pozwolenie nie zostalo nadane.
    */
   requestSensorsPermission(): boolean {
     if (this.motionPermission) {
@@ -36,32 +36,40 @@ export class Device  implements IDevice {
         })
         .catch(console.error)
     } else {
-      alert('DeviceMotionEvent is not defined. Sorry you can\'t play this game!');
+      alert('DeviceMotionEvent nie istnieje. Nie mozesz zagrac w gre.');
     }
 
     return this.motionPermission;
   };
 
   /**
-   * Funkcja zwraca rozmiar ekranu urzadzenia w pixeliach
-   * @returns {{width: {number}, height: {number}}} Object with width and height.
+   * Funkcja zwraca rozmiar ekranu urzadzenia w pixeliach.
+   * @returns {ISize} Obiekt z wysokoscia i szerokoscia.
    */
   public getScreenSize(): ISize {
     return this.screenSize;
   };
 
   /**
-   * Funkcja dodaje nasłuchiwanie na zmianę orientacji urządzenia
-   * @returns {{width: {number}, height: {number}}} Object with width and height.
+   * Funkcja dodaje nasłuchiwanie na zmianę orientacji urządzenia.
+   * @returns {void}
    */
   public setOrientationChangeEventHandler(): void {
     window.addEventListener('orientationchange', this.onOrientationChange.bind(this));
   };
 
+  /**
+   * Funkcja dodaje nasłuchiwanie na zmianę polozenia urzadzenia.
+   * @returns {void}
+   */
   public setDeviceOrientationEventHandler(): void {
     window.addEventListener('deviceorientation', this.onOrientationEvent.bind(this));
   };
 
+  /**
+   * Funkcja obsluguje zdarzenia zmiany polozenia urzadzenia, przekazywuje te dane do glownego obiektu game
+   * @returns {void}
+   */
   private onOrientationEvent(e: DeviceOrientationEvent): void {
     const x: number = parseFloat((<number>e.beta).toFixed(1));
     const y: number = parseFloat((<number>e.gamma).toFixed(1));
@@ -70,16 +78,16 @@ export class Device  implements IDevice {
   };
 
   /**
-   * Funkcja obsluguje eventy sensorow urzadzenia
+   * Funkcja obsluguje zdarzenia zmiany orientacji urzadzenia
    * @returns {void}
    */
-  onOrientationChange() : void {
+  onOrientationChange(): void {
     this.game.onOrientationChange();
   };
 
   /**
    * Funkcja definiuje rozmiar ekranu urzadzenia w pixeliach
-   * @returns {{width: {number}, height: {number}}} Object with width and height.
+   * @returns {ISize} Obiekt z wysokoscia i szerokoscia.
    */
   public defineScreenSize(): ISize {
     const screenSize: ISize = { width: 0, height: 0 };
@@ -97,7 +105,7 @@ export class Device  implements IDevice {
 
   /**
    * Funkcja zwraca wlasciwosci dotyczace orientacji urzadzenia
-   * @returns {{default: {string}, current: {string}, reversed: {boolean}}} Returns object with three properties
+   * @returns {IOrientation} Zwraca obiekt z trzema wlasciwosciami.
    */
   getOrientation(): IOrientation {
     const defaultOrientation = this.screenSize.width > this.screenSize.height ? 'landscape' : 'portrait';
@@ -123,19 +131,19 @@ export class Device  implements IDevice {
   };
 
   /**
-   * Funkcja sparwdza czy urzadzenie jest w landscape mode
-   * @returns {boolean} True or false
+   * Funkcja sparwdza czy urzadzenie jest w landscape widoku
+   * @returns {boolean} True lub false
    */
   get isLandscape(): boolean {
     return this.getOrientation().current === 'landscape';
-  }
+  };
 
   /**
-   * Funkcja sparwdza czy urzadzenie jest w portrait mode
-   * @returns {boolean} True or false
+   * Funkcja sparwdza czy urzadzenie jest w portrait widoku
+   * @returns {boolean} True lub false
    */
   get isPortrait(): boolean {
     return this.getOrientation().current === 'portrait';
-  }
+  };
 
 }

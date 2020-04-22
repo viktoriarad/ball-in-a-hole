@@ -1,19 +1,22 @@
 import { IState } from '../interfaces/gameobjects.js';
 
+/**
+ * Typ wyliczeniowy States, przechowuje stany gry
+ */
 enum States {
   INIT,
   PLAY,
   PAUSE,
   WIN,
   OVER
-}
+};
 
 export class State implements IState {
   private state: States;
 
   constructor() {
     this.state = States.INIT;
-  }
+  };
 
   /**
    * Funkcja zmienia stan gry na wystartowany

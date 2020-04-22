@@ -12,6 +12,10 @@ export class Game {
         this.level = 0;
     }
     ;
+    /**
+     * Funkcja obsluguje zdarzenie nacisniecia przycisku Start.
+     * @returns {void}
+     */
     onPressStartBtn() {
         if (this.device.isiOS) {
             this.device.requestSensorsPermission();
@@ -21,6 +25,10 @@ export class Game {
         }
     }
     ;
+    /**
+     * Funkcja rozpoczyna gre.
+     * @returns {void}
+     */
     start() {
         this.view.onStart();
         this.nextLevel();
@@ -29,7 +37,7 @@ export class Game {
     }
     ;
     /**
-     * Funkcja restartuje gre
+     * Funkcja rozpoczyna gre z nastepnym levelem.
      * @returns {void}
      */
     nextLevel() {
@@ -40,16 +48,24 @@ export class Game {
         this.state.start();
     }
     ;
+    /**
+     * Funkcja kontynuje gre po pausie.
+     * @returns {void}
+     */
     resume() {
         this.state.start();
     }
     ;
+    /**
+     * Funkcja zatryzumje gre na pausie.
+     * @returns {void}
+     */
     pause() {
         this.state.pause();
     }
     ;
     /**
-     * Funkcja restartuje gre
+     * Funkcja restartuje gre.
      * @returns {void}
      */
     restart() {
@@ -57,6 +73,10 @@ export class Game {
         this.nextLevel();
     }
     ;
+    /**
+     * Funkcja zwraca rozmiar planszy gry.
+     * @returns {ISize}
+     */
     getFieldSize(screenSize) {
         return {
             width: screenSize.width > screenSize.height ? screenSize.width : screenSize.height,
@@ -64,7 +84,7 @@ export class Game {
         };
     }
     /**
-     * Funkcja konczy gre z przegranym wynikiem
+     * Funkcja konczy gre z przegranym wynikiem.
      * @returns {void}
      */
     gameOver() {
@@ -72,7 +92,7 @@ export class Game {
     }
     ;
     /**
-     * Funkcja konczy gre z wygranym wynikiem
+     * Funkcja konczy gre z wygranym wynikiem.
      * @returns {void}
      */
     win() {
@@ -80,8 +100,8 @@ export class Game {
     }
     ;
     /**
-     * Funkcja zwraca obiekty gry
-     * @returns {IGameObjects} {{ball: IBall, traps: Array<ICircle>, finish: ICircle}}
+     * Funkcja zwraca obiekty gry.
+     * @returns {IGameObjects}
      */
     getGameObjects() {
         return {
@@ -92,7 +112,7 @@ export class Game {
     }
     ;
     /**
-     * Funkcja sprawdza czy gra jest wygrana
+     * Funkcja obsluguje zdarzenia zmiany polozenia urzadzenia.
      * @returns {void}
      */
     accelerate(coords) {
@@ -110,7 +130,7 @@ export class Game {
     ;
     /**
      * Funkcja obsluguje zachowanie w przypadku zmiany orientacjii urzadzenia
-     * @returns {boolean} True or false
+     * @returns {void}
      */
     onOrientationChange() {
         this.state.pause();
@@ -124,6 +144,10 @@ export class Game {
         this.render();
     }
     ;
+    /**
+     * Funkcja odswieza widok gry w landscapie
+     * @returns {void}
+     */
     updateLandscapeView() {
         if (this.state.isPaused()) {
             this.view.onPause();
@@ -137,7 +161,7 @@ export class Game {
     }
     ;
     /**
-     * Funkcja przesuwa pilke na odpowiednia ilosc pixeli
+     * Funkcja przesuwa pilke na odpowiednia ilosc pixeli.
      * @returns {void}
      */
     moveBallBy(coords) {

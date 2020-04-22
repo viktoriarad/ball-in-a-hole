@@ -4,10 +4,18 @@ export class Finish extends Circle {
         super(ballRadius * 1.5);
         this.fieldSize = _fieldSize;
     }
+    /**
+     * Funkcja generuje i przypisuje nowa pozycje dla dziury finiszowej na planszy gry.
+     * @returns {void}
+     */
     generateNewPosition() {
         this._x = Math.floor(Math.random() * (this.fieldSize.width * 0.2) + this._radius);
         this._y = Math.floor(Math.random() * (this.fieldSize.height - this._radius * 2) + this._radius);
     }
+    /**
+     * Funkcja sprawdza czy pilka trafila do dziury finiszowej.
+     * @returns {boolean} True jesli trafila lub false jesli nie.
+     */
     checkIfBallGotInside(ball) {
         const x = (Math.abs(this._x - ball.x) - this._radius) <= 0;
         const y = (Math.abs(this._y - ball.y) - this._radius) <= 0;

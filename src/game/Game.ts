@@ -28,6 +28,10 @@ export class Game implements IGame {
     this.level = 0;
   };
 
+  /**
+   * Funkcja obsluguje zdarzenie nacisniecia przycisku Start.
+   * @returns {void}
+   */
   onPressStartBtn(): void {
     if (this.device.isiOS) {
       this.device.requestSensorsPermission();
@@ -36,6 +40,10 @@ export class Game implements IGame {
     }
   };
 
+  /**
+   * Funkcja rozpoczyna gre.
+   * @returns {void}
+   */
   start(): void {
     this.view.onStart();
     this.nextLevel();
@@ -44,7 +52,7 @@ export class Game implements IGame {
   };
 
   /**
-   * Funkcja restartuje gre
+   * Funkcja rozpoczyna gre z nastepnym levelem.
    * @returns {void}
    */
   nextLevel(): void {
@@ -57,16 +65,24 @@ export class Game implements IGame {
     this.state.start();
   };
 
+  /**
+   * Funkcja kontynuje gre po pausie.
+   * @returns {void}
+   */
   resume(): void {
     this.state.start();
   };
 
+  /**
+   * Funkcja zatryzumje gre na pausie.
+   * @returns {void}
+   */
   pause(): void {
     this.state.pause();
   };
 
   /**
-   * Funkcja restartuje gre
+   * Funkcja restartuje gre.
    * @returns {void}
    */
   restart(): void {
@@ -74,6 +90,10 @@ export class Game implements IGame {
     this.nextLevel();
   };
 
+  /**
+   * Funkcja zwraca rozmiar planszy gry.
+   * @returns {ISize}
+   */
   getFieldSize(screenSize: ISize): ISize {
     return {
       width: screenSize.width > screenSize.height ? screenSize.width : screenSize.height,
@@ -82,7 +102,7 @@ export class Game implements IGame {
   }
 
   /**
-   * Funkcja konczy gre z przegranym wynikiem
+   * Funkcja konczy gre z przegranym wynikiem.
    * @returns {void}
    */
   public gameOver(): void {
@@ -90,7 +110,7 @@ export class Game implements IGame {
   };
 
   /**
-   * Funkcja konczy gre z wygranym wynikiem
+   * Funkcja konczy gre z wygranym wynikiem.
    * @returns {void}
    */
   public win(): void {
@@ -98,8 +118,8 @@ export class Game implements IGame {
   };
 
   /**
-   * Funkcja zwraca obiekty gry
-   * @returns {IGameObjects} {{ball: IBall, traps: Array<ICircle>, finish: ICircle}}
+   * Funkcja zwraca obiekty gry.
+   * @returns {IGameObjects}
    */
   public getGameObjects(): IGameObjects {
     return {
@@ -110,7 +130,7 @@ export class Game implements IGame {
   };
 
   /**
-   * Funkcja sprawdza czy gra jest wygrana
+   * Funkcja obsluguje zdarzenia zmiany polozenia urzadzenia.
    * @returns {void}
    */
   public accelerate(coords: IPosition): void {
@@ -128,7 +148,7 @@ export class Game implements IGame {
 
   /**
    * Funkcja obsluguje zachowanie w przypadku zmiany orientacjii urzadzenia
-   * @returns {boolean} True or false
+   * @returns {void}
    */
   public onOrientationChange(): void {
     this.state.pause();
@@ -143,6 +163,10 @@ export class Game implements IGame {
     this.render();
   };
 
+  /**
+   * Funkcja odswieza widok gry w landscapie
+   * @returns {void}
+   */
   private updateLandscapeView(): void {
     if (this.state.isPaused()) {
       this.view.onPause();
@@ -154,7 +178,7 @@ export class Game implements IGame {
   };
 
   /**
-   * Funkcja przesuwa pilke na odpowiednia ilosc pixeli
+   * Funkcja przesuwa pilke na odpowiednia ilosc pixeli.
    * @returns {void}
    */
   private moveBallBy(coords: IPosition): void {

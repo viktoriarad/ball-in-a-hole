@@ -8,6 +8,7 @@ export class View {
         this.canvas.height = this.fieldSize.height;
         this.ctx = this.canvas.getContext("2d");
         this.addHTMLElement(this.body, this.canvas);
+        // Tworzymy popupy z komunikatami dla roznych przypadkow
         this.rotateMsg = this.createHTMLElement("div", "rotate-msg");
         this.addHTMLElement(this.body, this.rotateMsg);
         this.pauseMsg = this.createHTMLElement("div", "pause-msg");
@@ -26,14 +27,27 @@ export class View {
         this.addHTMLElement(this.body, this.startGameBtn);
         this.addEventListener(this.startGameBtn, "click", this.onPressStartGameBtn.bind(this));
     }
+    ;
+    /**
+     * Funkcja wyswietla komunikat z przegranej
+     * @returns {void}
+     */
     gameOver() {
         this.gameOverMsg.classList.remove('invisible');
     }
     ;
+    /**
+     * Funkcja wyswietla komunikat z wygranej
+     * @returns {void}
+     */
     win() {
         this.nextLevelMsg.classList.remove('invisible');
     }
     ;
+    /**
+     * Funkcja tworzy HTMLElement z podanym tagiem i CSS klasa
+     * @returns {HTMLElement}
+     */
     createHTMLElement(tag, cssClass = "") {
         const element = document.createElement(tag);
         if (cssClass !== "") {
@@ -42,55 +56,108 @@ export class View {
         return element;
     }
     ;
+    /**
+     * Funkcja dodaje HTMLElement do innego
+     * @returns {void}
+     */
     addHTMLElement(parent, child) {
         parent.appendChild(child);
     }
     ;
+    /**
+     * Funkcja obsluguje dodanie eventListnera do elementu
+     * @returns {void}
+     */
     addEventListener(target, type, eventListener) {
         target.addEventListener(type, eventListener);
     }
     ;
+    /**
+     * Funkcja oblsuguje event nacisniecia komunikata z pausa
+     * @returns {void}
+     */
     onTouchPauseMsg() {
         this.pauseMsg.classList.add('invisible');
         this.game.resume();
     }
     ;
+    /**
+     * Funkcja oblsuguje event nacisniecia komunikata z przegranej
+     * @returns {void}
+     */
     onTouchGameOverMsg() {
         this.gameOverMsg.classList.add('invisible');
         this.game.restart();
     }
     ;
+    /**
+     * Funkcja oblsuguje event nacisniecia komunikata z nastepnym levelem
+     * @returns {void}
+     */
     onTouchNextLevelMsg() {
         this.nextLevelMsg.classList.add('invisible');
         this.game.nextLevel();
     }
     ;
+    /**
+     * Funkcja oblsuguje event nacisniecia przycisku Start
+     * @returns {void}
+     */
     onPressStartGameBtn() {
         this.game.onPressStartBtn();
     }
     ;
+    /**
+     * Funkcja ukrywa przycisk Start
+     * @returns {void}
+     */
     onStart() {
         this.startGameBtn.classList.add('invisible');
     }
     ;
+    /**
+     * Funkcja odpowiada za widok gry w portrecie
+     * @returns {void}
+     */
     onPortrait() {
         this.rotateMsg.classList.remove('invisible');
         this.gameOverMsg.classList.add('invisible');
         this.nextLevelMsg.classList.add('invisible');
         this.pauseMsg.classList.add('invisible');
     }
+    ;
+    /**
+     * Funkcja odpowiada za widok gry w landscape
+     * @returns {void}
+     */
     onLandscape() {
         this.rotateMsg.classList.add('invisible');
     }
+    ;
+    /**
+     * Funkcja wyswietla komunikat z pauza
+     * @returns {void}
+     */
     onPause() {
         this.pauseMsg.classList.remove('invisible');
     }
+    ;
+    /**
+     * Funkcja wyswietla komunikat z wygranej
+     * @returns {void}
+     */
     onWin() {
         this.nextLevelMsg.classList.remove('invisible');
     }
+    ;
+    /**
+     * Funkcja wyswietla komunikat z przegranej
+     * @returns {void}
+     */
     onGameOver() {
         this.gameOverMsg.classList.remove('invisible');
     }
+    ;
     /**
      * Funkcja odpowiedzialna za rendering canvasu
      * @returns {void} Zwraca true jesli canvas zostal wyrendorowany lub false jesli nie

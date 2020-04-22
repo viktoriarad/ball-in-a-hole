@@ -13,6 +13,10 @@ export class Traps implements ITraps {
     this.ballRadius = _ballRadius;
   };
 
+  /**
+   * Funkcja sprawdza czy pilka trafila do jednej z pulapek.
+   * @returns {boolean} True jesli trafila lub false jesli nie.
+   */
   public checkIfBallGotInside(ball: ICircle): boolean {
     return this.traps.some((trap: ICircle) => {
       const x: boolean = Math.abs(trap.x - ball.x) - trap.radius <= 0;
@@ -23,7 +27,7 @@ export class Traps implements ITraps {
 
   /**
    * Funkcja generuje wszystkie czerwone pulapki
-   * @void
+   * @returns {void}
    */
   public generateTraps(level: number, finishHole: ICircle, ball: ICircle): void {
     const trapsAmount: number = 5 + level * 2;
@@ -38,7 +42,7 @@ export class Traps implements ITraps {
 
   /**
    * Funkcja generuje pulapke i sprawdza aby sie nie znajdowala zablisko obok innych elementow gry
-   * @void
+   * @returns {void}
    */
   private generateTrap(radius: number, finishHole: ICircle, ball: ICircle): ICircle {
     const x: number = Math.floor(Math.random() * (this.fieldSize.width - radius * 2) + radius);
@@ -66,12 +70,20 @@ export class Traps implements ITraps {
     }
   };
 
+  /**
+   * Funkcja zwraca tablice ze wszystkimi pulapkami na planszy gry.
+   * @returns {Array<ICircle>}
+   */
   public getAll(): Array<ICircle> {
     return this.traps;
   };
 
+  /**
+   * Funkcja wyczyszcza tablice ze wszystkimi pulapkami na planszy gry.
+   * @returns {void}
+   */
   private clearTraps(): void {
     this.traps.length = 0;
-  }
+  };
 
 }

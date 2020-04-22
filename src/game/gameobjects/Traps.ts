@@ -5,10 +5,12 @@ import { Hole } from "./Hole.js";
 export class Traps implements ITraps {
   private readonly traps: Array<ICircle>;
   private readonly fieldSize: ISize;
+  private readonly ballRadius: number;
 
-  constructor(_fieldSize: ISize) {
+  constructor(_fieldSize: ISize, _ballRadius: number) {
     this.traps = [];
     this.fieldSize = _fieldSize;
+    this.ballRadius = _ballRadius;
   };
 
   public checkIfBallGotInside(ball: ICircle): boolean {
@@ -25,7 +27,7 @@ export class Traps implements ITraps {
    */
   public generateTraps(level: number, finishHole: ICircle, ball: ICircle): void {
     const trapsAmount: number = 5 + level * 2;
-    const radius: number = 15 + level;
+    const radius: number = this.ballRadius + level;
 
     this.clearTraps();
 

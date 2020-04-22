@@ -39,12 +39,13 @@ export interface IView {
 }
 
 export interface IDevice {
+  isiOS: boolean
+  isPortrait: boolean;
+  isLandscape: boolean;
   getScreenSize(): ISize;
   getOrientation(): IOrientation;
   requestSensorsPermission(): void;
-  setDeviceMotionEventHandler(): void;
-  isPortrait: boolean;
-  isLandscape: boolean;
+  setDeviceOrientationEventHandler(): void;
 }
 
 export interface IState {

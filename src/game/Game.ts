@@ -22,21 +22,25 @@ export class Game implements IGame {
 
     this.ball = new Ball(this.fieldSize, ballRadius);
     this.finish = new Finish(this.fieldSize, ballRadius);
-    this.traps = new Traps(this.fieldSize);
+    this.traps = new Traps(this.fieldSize, ballRadius);
 
     this.state = new State();
     this.level = 0;
   };
 
   onPressStartBtn(): void {
-    this.device.requestSensorsPermission();
+    if (this.device.isiOS) {
+      this.device.requestSensorsPermission();
+    } else {
+      this.start();
+    }
   };
 
   start(): void {
     this.view.onStart();
     this.nextLevel();
     this.render();
-    this.device.setDeviceMotionEventHandler();
+    this.device.setDeviceOrientationEventHandler();
   };
 
   /**
@@ -155,11 +159,11 @@ export class Game implements IGame {
    */
   private moveBallBy(coords: IPosition): void {
     const orientation: IOrientation = this.device.getOrientation();
-    const multiplier: number = orientation.reversed ? -1 : 1;
+    const multiplier: number = orientation.reversed ? 1 : -1;
 
     this.ball.moveBy({
-      x: coords.y * multiplier * this.level * 0.5,
-      y: coords.x * multiplier * this.level * 0.5
+      x: coords.x * multiplier * this.level * 0.1,
+      y: coords.y * (multiplier * -1) * this.level * 0.1
     });
 
     if (this.gotInTrap()) {

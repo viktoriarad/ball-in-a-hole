@@ -3,7 +3,7 @@ import { IOrientation, ISize, IPosition } from "../interfaces/gametypes.js";
 
 export class Device  implements IDevice {
   private motionPermission: boolean = false;
-  private readonly isiOS: boolean;
+  public readonly isiOS: boolean;
   private readonly screenSize: ISize;
   private readonly game: IGame;
 
@@ -58,12 +58,15 @@ export class Device  implements IDevice {
     window.addEventListener('orientationchange', this.onOrientationChange.bind(this));
   };
 
-  /**
-   * Funkcja dodaje nasłuchiwanie na ruch urządzenia w trzech wymiarach (x, y, z)
-   * @returns {{width: {number}, height: {number}}} Object with width and height.
-   */
-  public setDeviceMotionEventHandler(): void {
-    window.addEventListener('devicemotion', this.onMotionEvent.bind(this));
+  public setDeviceOrientationEventHandler(): void {
+    window.addEventListener('deviceorientation', this.onOrientationEvent.bind(this));
+  };
+
+  private onOrientationEvent(e: DeviceOrientationEvent): void {
+    const x: number = parseFloat((<number>e.beta).toFixed(1));
+    const y: number = parseFloat((<number>e.gamma).toFixed(1));
+
+    this.game.accelerate({ x, y });
   };
 
   /**
@@ -72,18 +75,6 @@ export class Device  implements IDevice {
    */
   onOrientationChange() : void {
     this.game.onOrientationChange();
-  };
-
-  /**
-   * Funkcja obsluguje eventy sensorow urzadzenia
-   * @param {object} e Event sensorow
-   */
-  onMotionEvent(e: DeviceMotionEvent) : void {
-    const acceleration = <DeviceMotionEventAcceleration>e.accelerationIncludingGravity;
-    const x: number = parseFloat((<number>acceleration.x).toFixed(1));
-    const y: number = parseFloat((<number>acceleration.y).toFixed(1));
-
-    this.game.accelerate({ x, y });
   };
 
   /**

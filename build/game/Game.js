@@ -7,7 +7,7 @@ export class Game {
         this.view = new View(this, this.fieldSize);
         this.ball = new Ball(this.fieldSize, ballRadius);
         this.finish = new Finish(this.fieldSize, ballRadius);
-        this.traps = new Traps(this.fieldSize);
+        this.traps = new Traps(this.fieldSize, ballRadius);
         this.state = new State();
         this.level = 0;
     }

@@ -22,7 +22,7 @@ export class Game implements IGame {
 
     this.ball = new Ball(this.fieldSize, ballRadius);
     this.finish = new Finish(this.fieldSize, ballRadius);
-    this.traps = new Traps(this.fieldSize);
+    this.traps = new Traps(this.fieldSize, ballRadius);
 
     this.state = new State();
     this.level = 0;

@@ -1,8 +1,9 @@
 import { Hole } from "./Hole.js";
 export class Traps {
-    constructor(_fieldSize) {
+    constructor(_fieldSize, _ballRadius) {
         this.traps = [];
         this.fieldSize = _fieldSize;
+        this.ballRadius = _ballRadius;
     }
     ;
     checkIfBallGotInside(ball) {
@@ -19,7 +20,7 @@ export class Traps {
      */
     generateTraps(level, finishHole, ball) {
         const trapsAmount = 5 + level * 2;
-        const radius = 15 + level;
+        const radius = this.ballRadius + level;
         this.clearTraps();
         for (let i = 0; i <= trapsAmount; i++) {
             this.traps.push(this.generateTrap(radius, finishHole, ball));

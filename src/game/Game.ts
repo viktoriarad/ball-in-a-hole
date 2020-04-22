@@ -40,7 +40,6 @@ export class Game implements IGame {
     this.view.onStart();
     this.nextLevel();
     this.render();
-    // this.device.setDeviceMotionEventHandler();
     this.device.setDeviceOrientationEventHandler();
   };
 

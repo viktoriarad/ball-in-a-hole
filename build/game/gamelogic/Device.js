@@ -58,30 +58,11 @@ export class Device {
     }
     ;
     /**
-     * Funkcja dodaje nasłuchiwanie na ruch urządzenia w trzech wymiarach (x, y, z)
-     * @returns {{width: {number}, height: {number}}} Object with width and height.
-     */
-    setDeviceMotionEventHandler() {
-        window.addEventListener('devicemotion', this.onMotionEvent.bind(this));
-    }
-    ;
-    /**
      * Funkcja obsluguje eventy sensorow urzadzenia
      * @returns {void}
      */
     onOrientationChange() {
         this.game.onOrientationChange();
-    }
-    ;
-    /**
-     * Funkcja obsluguje eventy sensorow urzadzenia
-     * @param {object} e Event sensorow
-     */
-    onMotionEvent(e) {
-        const acceleration = e.accelerationIncludingGravity;
-        const x = parseFloat(acceleration.x.toFixed(1));
-        const y = parseFloat(acceleration.y.toFixed(1));
-        this.game.accelerate({ x, y });
     }
     ;
     /**

@@ -70,31 +70,11 @@ export class Device  implements IDevice {
   };
 
   /**
-   * Funkcja dodaje nasłuchiwanie na ruch urządzenia w trzech wymiarach (x, y, z)
-   * @returns {{width: {number}, height: {number}}} Object with width and height.
-   */
-  public setDeviceMotionEventHandler(): void {
-    window.addEventListener('devicemotion', this.onMotionEvent.bind(this));
-  };
-
-  /**
    * Funkcja obsluguje eventy sensorow urzadzenia
    * @returns {void}
    */
   onOrientationChange() : void {
     this.game.onOrientationChange();
-  };
-
-  /**
-   * Funkcja obsluguje eventy sensorow urzadzenia
-   * @param {object} e Event sensorow
-   */
-  onMotionEvent(e: DeviceMotionEvent) : void {
-    const acceleration = <DeviceMotionEventAcceleration>e.accelerationIncludingGravity;
-    const x: number = parseFloat((<number>acceleration.x).toFixed(1));
-    const y: number = parseFloat((<number>acceleration.y).toFixed(1));
-
-    this.game.accelerate({ x, y });
   };
 
   /**

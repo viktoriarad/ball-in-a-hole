@@ -45,7 +45,6 @@ export interface IDevice {
   getScreenSize(): ISize;
   getOrientation(): IOrientation;
   requestSensorsPermission(): void;
-  setDeviceMotionEventHandler(): void
   setDeviceOrientationEventHandler(): void;
 }
 

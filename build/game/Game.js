@@ -25,7 +25,6 @@ export class Game {
         this.view.onStart();
         this.nextLevel();
         this.render();
-        // this.device.setDeviceMotionEventHandler();
         this.device.setDeviceOrientationEventHandler();
     }
     ;

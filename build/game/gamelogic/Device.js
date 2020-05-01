@@ -2,6 +2,7 @@ export class Device {
     constructor(_game) {
         this.motionPermission = false;
         this.game = _game;
+        this.isAndroid = /android/i.test(navigator.userAgent);
         this.isiOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
         this.screenSize = this.defineScreenSize();
     }
@@ -164,7 +165,12 @@ export class Device {
      * @returns {boolean} True lub false
      */
     get isLandscape() {
-        return this.getOrientation().current === 'landscape';
+        if (window.screen.orientation && window.screen.orientation.type) {
+            return window.screen.orientation.type.toLowerCase().includes("landscape");
+        }
+        else {
+            return this.getOrientation().current === 'landscape';
+        }
     }
     ;
     /**
@@ -172,7 +178,12 @@ export class Device {
      * @returns {boolean} True lub false
      */
     get isPortrait() {
-        return this.getOrientation().current === 'portrait';
+        if (window.screen.orientation && window.screen.orientation.type) {
+            return window.screen.orientation.type.toLowerCase().includes("portrait");
+        }
+        else {
+            return this.getOrientation().current === 'portrait';
+        }
     }
     ;
 }

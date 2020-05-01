@@ -4,11 +4,13 @@ import { IOrientation, ISize, IPosition } from "../interfaces/gametypes.js";
 export class Device  implements IDevice {
   private motionPermission: boolean = false;
   public readonly isiOS: boolean;
+  public readonly isAndroid: boolean;
   private screenSize: ISize;
   private readonly game: IGame;
 
   constructor(_game: IGame) {
     this.game = _game;
+    this.isAndroid = /android/i.test(navigator.userAgent);
     this.isiOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
     this.screenSize = this.defineScreenSize();
   };
@@ -179,7 +181,11 @@ export class Device  implements IDevice {
    * @returns {boolean} True lub false
    */
   get isLandscape(): boolean {
-    return this.getOrientation().current === 'landscape';
+    if (window.screen.orientation && window.screen.orientation.type) {
+      return window.screen.orientation.type.toLowerCase().includes("landscape");
+    } else {
+      return this.getOrientation().current === 'landscape';
+    }
   };
 
   /**
@@ -187,7 +193,11 @@ export class Device  implements IDevice {
    * @returns {boolean} True lub false
    */
   get isPortrait(): boolean {
-    return this.getOrientation().current === 'portrait';
+    if (window.screen.orientation && window.screen.orientation.type) {
+      return window.screen.orientation.type.toLowerCase().includes("portrait");
+    } else {
+      return this.getOrientation().current === 'portrait';
+    }
   };
 
 }

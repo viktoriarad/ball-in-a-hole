@@ -10,6 +10,7 @@ export class Game {
         this.traps = new Traps(ballRadius);
         this.state = new State();
         this.level = 0;
+        this.device.setupDeviceHandlers();
         this.updateOrientationViewOnInit();
     }
     ;
@@ -90,6 +91,13 @@ export class Game {
         this.fieldSize = this.defineFieldSize(screenSize);
     }
     ;
+    requestFullScreen() {
+        this.view.showFullScreenMsg();
+    }
+    ;
+    setFullScreen() {
+        this.device.setFullScreen();
+    }
     getFieldSize() {
         return this.fieldSize;
     }

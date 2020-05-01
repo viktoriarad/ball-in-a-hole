@@ -11,10 +11,16 @@ export class Device  implements IDevice {
     this.game = _game;
     this.isiOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
     this.screenSize = this.defineScreenSize();
+  };
 
+  /**
+   * @returns {void}
+   */
+  public setupDeviceHandlers(): void {
     this.setOrientationChangeEventHandler();
     this.setResizeEventHandler();
-  };
+    this.checkFullScreenAPI();
+  }
 
   /**
    * Funkcja prosi o pozwolenie aby sie korzystac z API sensorow urzadzenia.
@@ -73,15 +79,16 @@ export class Device  implements IDevice {
    */
   private setResizeEventHandler(): void {
     window.addEventListener('resize', this.onResizeEvent.bind(this));
-  }
+  };
 
   /**
    * Funkcja obsluguje zdarzenia zmiany rozmiaru stronki.
    * @returns {void}
    */
   private onResizeEvent(): void {
+    this.checkFullScreenAPI();
     this.game.onResize(this.defineScreenSize());
-  }
+  };
 
   /**
    * Funkcja obsluguje zdarzenia zmiany polozenia urzadzenia, przekazywuje te dane do glownego obiektu game
@@ -98,10 +105,27 @@ export class Device  implements IDevice {
    * Funkcja obsluguje zdarzenia zmiany orientacji urzadzenia
    * @returns {void}
    */
-  onOrientationChange(): void {
+  private onOrientationChange(): void {
     this.screenSize = this.defineScreenSize();
     this.game.onOrientationChange();
   };
+
+  private checkFullScreenAPI(): void {
+    const fullScreenEnabled: boolean = document.fullscreenEnabled || document.webkitFullscreenEnabled;
+    const isInFullScreen: boolean = document.fullscreenElement || document.webkitFullscreenElement ? true : false;
+
+    if (fullScreenEnabled && !isInFullScreen) {
+      this.game.requestFullScreen();
+    }
+  }
+
+  public setFullScreen(): void {
+    if (document.body.requestFullscreen) {
+      document.body.requestFullscreen();
+    } else if (document.body.webkitRequestFullscreen) {
+      document.body.webkitRequestFullscreen();
+    }
+  }
 
   /**
    * Funkcja definiuje rozmiar ekranu urzadzenia w pixeliach

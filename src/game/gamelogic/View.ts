@@ -7,6 +7,7 @@ export class View implements IView {
   private readonly ctx: CanvasRenderingContext2D;
   private readonly body: HTMLBodyElement;
   private fieldSize: ISize;
+  private readonly fullScreenMsg: HTMLElement;
   private readonly rotateMsg: HTMLElement;
   private readonly pauseMsg: HTMLElement;
   private readonly gameOverMsg: HTMLElement;
@@ -27,6 +28,11 @@ export class View implements IView {
     // Tworzymy popupy z komunikatami dla roznych przypadkow
     this.rotateMsg = this.createHTMLElement("div", "rotate-msg");
     this.addHTMLElement(this.body, this.rotateMsg);
+
+    this.fullScreenMsg = this.createHTMLElement("div", "fullscreen-msg");
+    this.fullScreenMsg.classList.add("invisible");
+    this.addHTMLElement(this.body, this.fullScreenMsg);
+    this.addEventListener(this.fullScreenMsg, "click", this.onTouchFullScreenMsg.bind(this));
 
     this.pauseMsg = this.createHTMLElement("div", "pause-msg");
     this.pauseMsg.classList.add("invisible");
@@ -107,6 +113,23 @@ export class View implements IView {
    */
   private addEventListener(target: HTMLElement, type: string, eventListener: EventListenerOrEventListenerObject): void {
     target.addEventListener(type, eventListener);
+  };
+
+  /**
+   * Funkcja wyswietla komunikat z FullScreen trybem
+   * @returns {void}
+   */
+  public showFullScreenMsg(): void {
+    this.fullScreenMsg.classList.remove('invisible');
+  };
+
+  /**
+   * Funkcja oblsuguje event nacisniecia na komunikat z FullScreen trybem
+   * @returns {void}
+   */
+  private onTouchFullScreenMsg(): void {
+    this.fullScreenMsg.classList.add('invisible');
+    this.game.setFullScreen();
   };
 
   /**

@@ -11,6 +11,10 @@ export class View {
         // Tworzymy popupy z komunikatami dla roznych przypadkow
         this.rotateMsg = this.createHTMLElement("div", "rotate-msg");
         this.addHTMLElement(this.body, this.rotateMsg);
+        this.fullScreenMsg = this.createHTMLElement("div", "fullscreen-msg");
+        this.fullScreenMsg.classList.add("invisible");
+        this.addHTMLElement(this.body, this.fullScreenMsg);
+        this.addEventListener(this.fullScreenMsg, "click", this.onTouchFullScreenMsg.bind(this));
         this.pauseMsg = this.createHTMLElement("div", "pause-msg");
         this.pauseMsg.classList.add("invisible");
         this.addHTMLElement(this.body, this.pauseMsg);
@@ -87,6 +91,23 @@ export class View {
      */
     addEventListener(target, type, eventListener) {
         target.addEventListener(type, eventListener);
+    }
+    ;
+    /**
+     * Funkcja wyswietla komunikat z FullScreen trybem
+     * @returns {void}
+     */
+    showFullScreenMsg() {
+        this.fullScreenMsg.classList.remove('invisible');
+    }
+    ;
+    /**
+     * Funkcja oblsuguje event nacisniecia na komunikat z FullScreen trybem
+     * @returns {void}
+     */
+    onTouchFullScreenMsg() {
+        this.fullScreenMsg.classList.add('invisible');
+        this.game.setFullScreen();
     }
     ;
     /**

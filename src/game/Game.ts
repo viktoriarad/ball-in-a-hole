@@ -27,6 +27,7 @@ export class Game implements IGame {
     this.state = new State();
     this.level = 0;
 
+    this.device.setupDeviceHandlers();
     this.updateOrientationViewOnInit();
   };
 
@@ -107,6 +108,14 @@ export class Game implements IGame {
   public onResize(screenSize: ISize): void {
     this.fieldSize = this.defineFieldSize(screenSize);
   };
+
+  public requestFullScreen(): void {
+    this.view.showFullScreenMsg();
+  };
+
+  public setFullScreen(): void {
+    this.device.setFullScreen();
+  }
 
   public getFieldSize(): ISize {
     return this.fieldSize;

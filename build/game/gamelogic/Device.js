@@ -4,10 +4,16 @@ export class Device {
         this.game = _game;
         this.isiOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
         this.screenSize = this.defineScreenSize();
-        this.setOrientationChangeEventHandler();
-        this.setResizeEventHandler();
     }
     ;
+    /**
+     * @returns {void}
+     */
+    setupDeviceHandlers() {
+        this.setOrientationChangeEventHandler();
+        this.setResizeEventHandler();
+        this.checkFullScreenAPI();
+    }
     /**
      * Funkcja prosi o pozwolenie aby sie korzystac z API sensorow urzadzenia.
      * @returns {boolean} True lub false jesli pozwolenie nie zostalo nadane.
@@ -64,13 +70,16 @@ export class Device {
     setResizeEventHandler() {
         window.addEventListener('resize', this.onResizeEvent.bind(this));
     }
+    ;
     /**
      * Funkcja obsluguje zdarzenia zmiany rozmiaru stronki.
      * @returns {void}
      */
     onResizeEvent() {
+        this.checkFullScreenAPI();
         this.game.onResize(this.defineScreenSize());
     }
+    ;
     /**
      * Funkcja obsluguje zdarzenia zmiany polozenia urzadzenia, przekazywuje te dane do glownego obiektu game
      * @returns {void}
@@ -90,6 +99,21 @@ export class Device {
         this.game.onOrientationChange();
     }
     ;
+    checkFullScreenAPI() {
+        const fullScreenEnabled = document.fullscreenEnabled || document.webkitFullscreenEnabled;
+        const isInFullScreen = document.fullscreenElement || document.webkitFullscreenElement ? true : false;
+        if (fullScreenEnabled && !isInFullScreen) {
+            this.game.requestFullScreen();
+        }
+    }
+    setFullScreen() {
+        if (document.body.requestFullscreen) {
+            document.body.requestFullscreen();
+        }
+        else if (document.body.webkitRequestFullscreen) {
+            document.body.webkitRequestFullscreen();
+        }
+    }
     /**
      * Funkcja definiuje rozmiar ekranu urzadzenia w pixeliach
      * @returns {ISize} Obiekt z wysokoscia i szerokoscia.

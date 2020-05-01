@@ -26,6 +26,8 @@ export interface IGame {
   onPressStartBtn(): void;
   getFieldSize(): ISize;
   onResize(screenSize: ISize): void;
+  setFullScreen(): void;
+  requestFullScreen(): void;
 }
 
 export interface IView {
@@ -38,6 +40,7 @@ export interface IView {
   onPause(): void;
   onGameOver(): void;
   onWin(): void;
+  showFullScreenMsg(): void;
 }
 
 export interface IDevice {
@@ -48,6 +51,8 @@ export interface IDevice {
   getOrientation(): IOrientation;
   requestSensorsPermission(): void;
   setDeviceOrientationEventHandler(): void;
+  setFullScreen(): void;
+  setupDeviceHandlers(): void;
 }
 
 export interface IState {

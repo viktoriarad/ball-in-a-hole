@@ -95,6 +95,8 @@ export class Device  implements IDevice {
    * @returns {void}
    */
   private onOrientationEvent(e: DeviceOrientationEvent): void {
+    if (this.isPortrait) return;
+
     const x: number = parseFloat((<number>e.beta).toFixed(1));
     const y: number = parseFloat((<number>e.gamma).toFixed(1));
 

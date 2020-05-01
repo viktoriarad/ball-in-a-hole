@@ -85,6 +85,8 @@ export class Device {
      * @returns {void}
      */
     onOrientationEvent(e) {
+        if (this.isPortrait)
+            return;
         const x = parseFloat(e.beta.toFixed(1));
         const y = parseFloat(e.gamma.toFixed(1));
         this.game.accelerate({ x, y });

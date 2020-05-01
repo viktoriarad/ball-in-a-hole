@@ -1,6 +1,7 @@
 *, html, body {
     padding: 0;
     margin: 0;
+    background-color: #ffffff;
 }
 
 body {
@@ -8,7 +9,6 @@ body {
     height: 100vh;
     width: 100vw;
     overflow: hidden;
-    background: #ffffff;
 }
 
 .gyroscope-data {

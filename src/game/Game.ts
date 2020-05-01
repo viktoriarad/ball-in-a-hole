@@ -26,6 +26,8 @@ export class Game implements IGame {
 
     this.state = new State();
     this.level = 0;
+
+    this.updateOrientationViewOnInit();
   };
 
   /**
@@ -91,7 +93,8 @@ export class Game implements IGame {
   };
 
   /**
-   * Funkcja zwraca rozmiar planszy gry.
+   * Funkcja zwraca rozmiar planszy gry. Nie zaleznie od urzadzenia zawsze przypisyjemy wieksza wartosc do szerokosci
+   * i mniejsza do wysykosci.
    * @returns {ISize}
    */
   getFieldSize(screenSize: ISize): ISize {
@@ -161,6 +164,18 @@ export class Game implements IGame {
     }
 
     this.render();
+  };
+
+  /**
+   * Funkcja odswieza widok gry podczas inicjalizacji w zaleznosci od orientacji
+   * @returns {void}
+   */
+  private updateOrientationViewOnInit(): void {
+    if (this.device.isPortrait) {
+      this.view.onPortrait();
+    } else {
+      this.view.onLandscape();
+    }
   };
 
   /**

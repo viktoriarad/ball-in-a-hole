@@ -105,7 +105,7 @@ export class Game implements IGame {
   };
 
   public onResize(screenSize: ISize): void {
-    this.fieldSize = screenSize;
+    this.fieldSize = this.defineFieldSize(screenSize);
   };
 
   public getFieldSize(): ISize {

@@ -87,7 +87,7 @@ export class Game {
     }
     ;
     onResize(screenSize) {
-        this.fieldSize = screenSize;
+        this.fieldSize = this.defineFieldSize(screenSize);
     }
     ;
     getFieldSize() {

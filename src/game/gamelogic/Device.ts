@@ -13,6 +13,7 @@ export class Device  implements IDevice {
     this.screenSize = this.defineScreenSize();
 
     this.setOrientationChangeEventHandler();
+    this.setResizeEventHandler();
   };
 
   /**

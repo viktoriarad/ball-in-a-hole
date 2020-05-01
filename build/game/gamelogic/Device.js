@@ -5,6 +5,7 @@ export class Device {
         this.isiOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
         this.screenSize = this.defineScreenSize();
         this.setOrientationChangeEventHandler();
+        this.setResizeEventHandler();
     }
     ;
     /**

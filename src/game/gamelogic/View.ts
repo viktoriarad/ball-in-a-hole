@@ -6,7 +6,7 @@ export class View implements IView {
   private readonly canvas: HTMLCanvasElement;
   private readonly ctx: CanvasRenderingContext2D;
   private readonly body: HTMLBodyElement;
-  private readonly fieldSize: ISize;
+  private fieldSize: ISize;
   private readonly rotateMsg: HTMLElement;
   private readonly pauseMsg: HTMLElement;
   private readonly gameOverMsg: HTMLElement;
@@ -49,10 +49,27 @@ export class View implements IView {
   };
 
   /**
+   * Funkcja tworzy canvas
+   * @returns {void}
+   */
+  private updateCanvasSize(): void {
+    this.canvas.width = this.fieldSize.width;
+    this.canvas.height = this.fieldSize.height;
+  };
+
+  /**
+   * Funkcja tworzy canvas
+   * @returns {void}
+   */
+  private updateFieldSize(): void {
+    this.fieldSize = this.game.getFieldSize();
+  };
+
+  /**
    * Funkcja wyswietla komunikat z przegranej
    * @returns {void}
    */
-  gameOver(): void {
+  public gameOver(): void {
     this.gameOverMsg.classList.remove('invisible');
   };
 
@@ -60,7 +77,7 @@ export class View implements IView {
    * Funkcja wyswietla komunikat z wygranej
    * @returns {void}
    */
-  win(): void {
+  public win(): void {
     this.nextLevelMsg.classList.remove('invisible');
   };
 
@@ -68,7 +85,7 @@ export class View implements IView {
    * Funkcja tworzy HTMLElement z podanym tagiem i CSS klasa
    * @returns {HTMLElement}
    */
-  createHTMLElement(tag: string, cssClass: string = ""): HTMLElement {
+  private createHTMLElement(tag: string, cssClass: string = ""): HTMLElement {
     const element = document.createElement(tag);
     if (cssClass !== "") {
       element.classList.add(cssClass);
@@ -80,7 +97,7 @@ export class View implements IView {
    * Funkcja dodaje HTMLElement do innego
    * @returns {void}
    */
-  addHTMLElement(parent: HTMLElement, child: HTMLElement): void {
+  private addHTMLElement(parent: HTMLElement, child: HTMLElement): void {
     parent.appendChild(child);
   };
 
@@ -88,7 +105,7 @@ export class View implements IView {
    * Funkcja obsluguje dodanie eventListnera do elementu
    * @returns {void}
    */
-  addEventListener(target: HTMLElement, type: string, eventListener: EventListenerOrEventListenerObject): void {
+  private addEventListener(target: HTMLElement, type: string, eventListener: EventListenerOrEventListenerObject): void {
     target.addEventListener(type, eventListener);
   };
 
@@ -96,7 +113,7 @@ export class View implements IView {
    * Funkcja oblsuguje event nacisniecia komunikata z pausa
    * @returns {void}
    */
-  onTouchPauseMsg(): void {
+  private onTouchPauseMsg(): void {
     this.pauseMsg.classList.add('invisible');
     this.game.resume();
   };
@@ -105,7 +122,7 @@ export class View implements IView {
    * Funkcja oblsuguje event nacisniecia komunikata z przegranej
    * @returns {void}
    */
-  onTouchGameOverMsg(): void {
+  private onTouchGameOverMsg(): void {
     this.gameOverMsg.classList.add('invisible');
     this.game.restart();
   };
@@ -114,7 +131,7 @@ export class View implements IView {
    * Funkcja oblsuguje event nacisniecia komunikata z nastepnym levelem
    * @returns {void}
    */
-  onTouchNextLevelMsg(): void {
+  private onTouchNextLevelMsg(): void {
     this.nextLevelMsg.classList.add('invisible');
     this.game.nextLevel();
   };
@@ -123,7 +140,9 @@ export class View implements IView {
    * Funkcja oblsuguje event nacisniecia przycisku Start
    * @returns {void}
    */
-  onPressStartGameBtn(): void {
+  private onPressStartGameBtn(): void {
+    this.updateFieldSize();
+    this.updateCanvasSize();
     this.game.onPressStartBtn();
   };
 
@@ -131,7 +150,7 @@ export class View implements IView {
    * Funkcja ukrywa przycisk Start
    * @returns {void}
    */
-  onStart(): void {
+  public onStart(): void {
     this.startGameBtn.classList.add('invisible');
   };
 
@@ -139,7 +158,7 @@ export class View implements IView {
    * Funkcja odpowiada za widok gry w portrecie
    * @returns {void}
    */
-  onPortrait(): void {
+  public onPortrait(): void {
     this.rotateMsg.classList.remove('invisible');
     this.gameOverMsg.classList.add('invisible');
     this.nextLevelMsg.classList.add('invisible');
@@ -150,7 +169,7 @@ export class View implements IView {
    * Funkcja odpowiada za widok gry w landscape
    * @returns {void}
    */
-  onLandscape(): void {
+  public onLandscape(): void {
     this.rotateMsg.classList.add('invisible');
   };
 
@@ -158,7 +177,7 @@ export class View implements IView {
    * Funkcja wyswietla komunikat z pauza
    * @returns {void}
    */
-  onPause(): void {
+  public onPause(): void {
     this.pauseMsg.classList.remove('invisible');
   };
 
@@ -166,7 +185,7 @@ export class View implements IView {
    * Funkcja wyswietla komunikat z wygranej
    * @returns {void}
    */
-  onWin(): void {
+  public onWin(): void {
     this.nextLevelMsg.classList.remove('invisible');
   };
 
@@ -174,7 +193,7 @@ export class View implements IView {
    * Funkcja wyswietla komunikat z przegranej
    * @returns {void}
    */
-  onGameOver(): void {
+  public onGameOver(): void {
     this.gameOverMsg.classList.remove('invisible');
   };
 
@@ -182,7 +201,7 @@ export class View implements IView {
    * Funkcja odpowiedzialna za rendering canvasu
    * @returns {void} Zwraca true jesli canvas zostal wyrendorowany lub false jesli nie
    */
-  render(objectsToRender: IGameObjects): void {
+  public render(objectsToRender: IGameObjects): void {
     const ball: IBall = objectsToRender.ball;
     const traps: Array<ICircle> = objectsToRender.traps;
     const finish: ICircle = objectsToRender.finish;

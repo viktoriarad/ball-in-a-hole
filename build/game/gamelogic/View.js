@@ -29,6 +29,23 @@ export class View {
     }
     ;
     /**
+     * Funkcja tworzy canvas
+     * @returns {void}
+     */
+    updateCanvasSize() {
+        this.canvas.width = this.fieldSize.width;
+        this.canvas.height = this.fieldSize.height;
+    }
+    ;
+    /**
+     * Funkcja tworzy canvas
+     * @returns {void}
+     */
+    updateFieldSize() {
+        this.fieldSize = this.game.getFieldSize();
+    }
+    ;
+    /**
      * Funkcja wyswietla komunikat z przegranej
      * @returns {void}
      */
@@ -104,6 +121,8 @@ export class View {
      * @returns {void}
      */
     onPressStartGameBtn() {
+        this.updateFieldSize();
+        this.updateCanvasSize();
         this.game.onPressStartBtn();
     }
     ;

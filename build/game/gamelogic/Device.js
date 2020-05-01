@@ -57,6 +57,20 @@ export class Device {
     }
     ;
     /**
+     * Funkcja dodaje nasłuchiwanie na zmianę rozmiaru stronki (globalny obiekt window).
+     * @returns {void}
+     */
+    setResizeEventHandler() {
+        window.addEventListener('resize', this.onResizeEvent.bind(this));
+    }
+    /**
+     * Funkcja obsluguje zdarzenia zmiany rozmiaru stronki.
+     * @returns {void}
+     */
+    onResizeEvent() {
+        this.game.onResize(this.defineScreenSize());
+    }
+    /**
      * Funkcja obsluguje zdarzenia zmiany polozenia urzadzenia, przekazywuje te dane do glownego obiektu game
      * @returns {void}
      */
@@ -71,6 +85,7 @@ export class Device {
      * @returns {void}
      */
     onOrientationChange() {
+        this.screenSize = this.defineScreenSize();
         this.game.onOrientationChange();
     }
     ;
@@ -85,8 +100,8 @@ export class Device {
             screenSize.height = window.screen.height;
         }
         else {
-            screenSize.width = window.innerWidth;
-            screenSize.height = window.innerHeight;
+            screenSize.width = window.outerWidth;
+            screenSize.height = window.outerHeight;
         }
         return screenSize;
     }

@@ -4,7 +4,7 @@ import { IOrientation, ISize, IPosition } from "../interfaces/gametypes.js";
 export class Device  implements IDevice {
   private motionPermission: boolean = false;
   public readonly isiOS: boolean;
-  private readonly screenSize: ISize;
+  private screenSize: ISize;
   private readonly game: IGame;
 
   constructor(_game: IGame) {
@@ -67,6 +67,22 @@ export class Device  implements IDevice {
   };
 
   /**
+   * Funkcja dodaje nasłuchiwanie na zmianę rozmiaru stronki (globalny obiekt window).
+   * @returns {void}
+   */
+  private setResizeEventHandler(): void {
+    window.addEventListener('resize', this.onResizeEvent.bind(this));
+  }
+
+  /**
+   * Funkcja obsluguje zdarzenia zmiany rozmiaru stronki.
+   * @returns {void}
+   */
+  private onResizeEvent(): void {
+    this.game.onResize(this.defineScreenSize());
+  }
+
+  /**
    * Funkcja obsluguje zdarzenia zmiany polozenia urzadzenia, przekazywuje te dane do glownego obiektu game
    * @returns {void}
    */
@@ -82,6 +98,7 @@ export class Device  implements IDevice {
    * @returns {void}
    */
   onOrientationChange(): void {
+    this.screenSize = this.defineScreenSize();
     this.game.onOrientationChange();
   };
 
@@ -96,8 +113,8 @@ export class Device  implements IDevice {
       screenSize.width = window.screen.width;
       screenSize.height = window.screen.height;
     } else {
-      screenSize.width = window.innerWidth;
-      screenSize.height = window.innerHeight;
+      screenSize.width = window.outerWidth;
+      screenSize.height = window.outerHeight;
     }
 
     return screenSize;

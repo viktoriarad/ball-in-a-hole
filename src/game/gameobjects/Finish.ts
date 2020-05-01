@@ -3,20 +3,18 @@ import { Circle } from './Circle.js';
 import { ISize } from "../interfaces/gametypes.js";
 
 export class Finish extends Circle implements IFinish {
-  private readonly fieldSize: ISize;
 
-  constructor(_fieldSize: ISize, ballRadius: number) {
+  constructor(ballRadius: number) {
     super(ballRadius * 1.5);
-    this.fieldSize = _fieldSize;
   }
 
   /**
    * Funkcja generuje i przypisuje nowa pozycje dla dziury finiszowej na planszy gry.
    * @returns {void}
    */
-  public generateNewPosition(): void {
-    this._x = Math.floor(Math.random() * (this.fieldSize.width * 0.2) + this._radius);
-    this._y = Math.floor(Math.random() * (this.fieldSize.height - this._radius * 2) + this._radius);
+  public generateNewPosition(fieldSize: ISize): void {
+    this._x = Math.floor(Math.random() * (fieldSize.width * 0.2) + this._radius);
+    this._y = Math.floor(Math.random() * (fieldSize.height - this._radius * 2) + this._radius);
   }
 
   /**

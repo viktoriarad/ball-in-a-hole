@@ -66,6 +66,7 @@ export class Game implements IGame {
     this.traps.generateTraps(this.level, this.finish, this.ball, this.fieldSize);
 
     this.state.start();
+    this.render();
   };
 
   /**

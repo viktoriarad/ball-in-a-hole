@@ -48,6 +48,7 @@ export class Game {
         this.finish.generateNewPosition(this.fieldSize);
         this.traps.generateTraps(this.level, this.finish, this.ball, this.fieldSize);
         this.state.start();
+        this.render();
     }
     ;
     /**

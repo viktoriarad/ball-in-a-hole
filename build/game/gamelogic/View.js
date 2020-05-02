@@ -11,6 +11,10 @@ export class View {
         // Tworzymy popupy z komunikatami dla roznych przypadkow
         this.rotateMsg = this.createHTMLElement("div", "rotate-msg");
         this.addHTMLElement(this.body, this.rotateMsg);
+        this.fullScreenMsg = this.createHTMLElement("div", "fullscreen-msg");
+        this.fullScreenMsg.classList.add("invisible");
+        this.addHTMLElement(this.body, this.fullScreenMsg);
+        this.addEventListener(this.fullScreenMsg, "click", this.onTouchFullScreenMsg.bind(this));
         this.pauseMsg = this.createHTMLElement("div", "pause-msg");
         this.pauseMsg.classList.add("invisible");
         this.addHTMLElement(this.body, this.pauseMsg);
@@ -26,6 +30,23 @@ export class View {
         this.startGameBtn = this.createHTMLElement("button", "start-game");
         this.addHTMLElement(this.body, this.startGameBtn);
         this.addEventListener(this.startGameBtn, "click", this.onPressStartGameBtn.bind(this));
+    }
+    ;
+    /**
+     * Funkcja tworzy canvas
+     * @returns {void}
+     */
+    updateCanvasSize() {
+        this.canvas.width = this.fieldSize.width;
+        this.canvas.height = this.fieldSize.height;
+    }
+    ;
+    /**
+     * Funkcja tworzy canvas
+     * @returns {void}
+     */
+    updateFieldSize() {
+        this.fieldSize = this.game.getFieldSize();
     }
     ;
     /**
@@ -73,6 +94,23 @@ export class View {
     }
     ;
     /**
+     * Funkcja wyswietla komunikat z FullScreen trybem
+     * @returns {void}
+     */
+    showFullScreenMsg() {
+        this.fullScreenMsg.classList.remove('invisible');
+    }
+    ;
+    /**
+     * Funkcja oblsuguje event nacisniecia na komunikat z FullScreen trybem
+     * @returns {void}
+     */
+    onTouchFullScreenMsg() {
+        this.fullScreenMsg.classList.add('invisible');
+        this.game.setFullScreen();
+    }
+    ;
+    /**
      * Funkcja oblsuguje event nacisniecia komunikata z pausa
      * @returns {void}
      */
@@ -104,6 +142,8 @@ export class View {
      * @returns {void}
      */
     onPressStartGameBtn() {
+        this.updateFieldSize();
+        this.updateCanvasSize();
         this.game.onPressStartBtn();
     }
     ;

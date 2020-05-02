@@ -1,16 +1,15 @@
 import { Circle } from './Circle.js';
 export class Ball extends Circle {
-    constructor(_fieldSize, ballRadius) {
+    constructor(ballRadius) {
         super(ballRadius);
-        this.fieldSize = _fieldSize;
     }
     /**
      * Funkcja generuje i przypisuje nowa pozycje dla pilki na planszy gry.
      * @returns {void}
      */
-    generateNewPosition() {
-        this._x = Math.floor((this.fieldSize.width * 0.8) + Math.random() * (this.fieldSize.width * 0.2) - this._radius);
-        this._y = Math.floor(Math.random() * (this.fieldSize.height - this._radius * 2) + this._radius);
+    generateNewPosition(fieldSize) {
+        this._x = Math.floor((fieldSize.width * 0.8) + Math.random() * (fieldSize.width * 0.2) - this._radius);
+        this._y = Math.floor(Math.random() * (fieldSize.height - this._radius * 2) + this._radius);
     }
     ;
     /**

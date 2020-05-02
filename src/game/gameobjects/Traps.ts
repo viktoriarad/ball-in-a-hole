@@ -4,12 +4,10 @@ import { Hole } from "./Hole.js";
 
 export class Traps implements ITraps {
   private readonly traps: Array<ICircle>;
-  private readonly fieldSize: ISize;
   private readonly ballRadius: number;
 
-  constructor(_fieldSize: ISize, _ballRadius: number) {
+  constructor(_ballRadius: number) {
     this.traps = [];
-    this.fieldSize = _fieldSize;
     this.ballRadius = _ballRadius;
   };
 
@@ -29,14 +27,14 @@ export class Traps implements ITraps {
    * Funkcja generuje wszystkie czerwone pulapki
    * @returns {void}
    */
-  public generateTraps(level: number, finishHole: ICircle, ball: ICircle): void {
+  public generateTraps(level: number, finishHole: ICircle, ball: ICircle, fieldSize: ISize): void {
     const trapsAmount: number = 5 + level * 2;
     const radius: number = this.ballRadius + level;
 
     this.clearTraps();
 
     for (let i = 0; i <= trapsAmount; i++) {
-      this.traps.push(this.generateTrap(radius, finishHole, ball));
+      this.traps.push(this.generateTrap(radius, finishHole, ball, fieldSize));
     }
   };
 
@@ -44,9 +42,9 @@ export class Traps implements ITraps {
    * Funkcja generuje pulapke i sprawdza aby sie nie znajdowala zablisko obok innych elementow gry
    * @returns {void}
    */
-  private generateTrap(radius: number, finishHole: ICircle, ball: ICircle): ICircle {
-    const x: number = Math.floor(Math.random() * (this.fieldSize.width - radius * 2) + radius);
-    const y: number = Math.floor(Math.random() * (this.fieldSize.height - radius * 2) + radius);
+  private generateTrap(radius: number, finishHole: ICircle, ball: ICircle, fieldSize: ISize): ICircle {
+    const x: number = Math.floor(Math.random() * (fieldSize.width - radius * 2) + radius);
+    const y: number = Math.floor(Math.random() * (fieldSize.height - radius * 2) + radius);
 
     const trapCrossing: boolean = this.traps.some((hole: ICircle) => {
       const nearX: boolean = Math.abs(hole.x - x) - hole.radius - radius <= 0;
@@ -64,7 +62,7 @@ export class Traps implements ITraps {
     );
 
     if (trapCrossing || ballCrossing || finishCrossing) {
-      return this.generateTrap(radius, finishHole, ball);
+      return this.generateTrap(radius, finishHole, ball, fieldSize);
     } else {
       return new Hole(radius, x, y);
     }

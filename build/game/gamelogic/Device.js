@@ -2,11 +2,19 @@ export class Device {
     constructor(_game) {
         this.motionPermission = false;
         this.game = _game;
+        this.isAndroid = /android/i.test(navigator.userAgent);
         this.isiOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
         this.screenSize = this.defineScreenSize();
-        this.setOrientationChangeEventHandler();
     }
     ;
+    /**
+     * @returns {void}
+     */
+    setupDeviceHandlers() {
+        this.setOrientationChangeEventHandler();
+        this.setResizeEventHandler();
+        this.checkFullScreenAPI();
+    }
     /**
      * Funkcja prosi o pozwolenie aby sie korzystac z API sensorow urzadzenia.
      * @returns {boolean} True lub false jesli pozwolenie nie zostalo nadane.
@@ -57,10 +65,29 @@ export class Device {
     }
     ;
     /**
+     * Funkcja dodaje nasłuchiwanie na zmianę rozmiaru stronki (globalny obiekt window).
+     * @returns {void}
+     */
+    setResizeEventHandler() {
+        window.addEventListener('resize', this.onResizeEvent.bind(this));
+    }
+    ;
+    /**
+     * Funkcja obsluguje zdarzenia zmiany rozmiaru stronki.
+     * @returns {void}
+     */
+    onResizeEvent() {
+        this.checkFullScreenAPI();
+        this.game.onResize(this.defineScreenSize());
+    }
+    ;
+    /**
      * Funkcja obsluguje zdarzenia zmiany polozenia urzadzenia, przekazywuje te dane do glownego obiektu game
      * @returns {void}
      */
     onOrientationEvent(e) {
+        if (this.isPortrait)
+            return;
         const x = parseFloat(e.beta.toFixed(1));
         const y = parseFloat(e.gamma.toFixed(1));
         this.game.accelerate({ x, y });
@@ -71,9 +98,25 @@ export class Device {
      * @returns {void}
      */
     onOrientationChange() {
+        this.screenSize = this.defineScreenSize();
         this.game.onOrientationChange();
     }
     ;
+    checkFullScreenAPI() {
+        const fullScreenEnabled = document.fullscreenEnabled || document.webkitFullscreenEnabled;
+        const isInFullScreen = document.fullscreenElement || document.webkitFullscreenElement ? true : false;
+        if (fullScreenEnabled && !isInFullScreen) {
+            this.game.requestFullScreen();
+        }
+    }
+    setFullScreen() {
+        if (document.body.requestFullscreen) {
+            document.body.requestFullscreen();
+        }
+        else if (document.body.webkitRequestFullscreen) {
+            document.body.webkitRequestFullscreen();
+        }
+    }
     /**
      * Funkcja definiuje rozmiar ekranu urzadzenia w pixeliach
      * @returns {ISize} Obiekt z wysokoscia i szerokoscia.
@@ -85,8 +128,8 @@ export class Device {
             screenSize.height = window.screen.height;
         }
         else {
-            screenSize.width = window.innerWidth;
-            screenSize.height = window.innerHeight;
+            screenSize.width = window.outerWidth;
+            screenSize.height = window.outerHeight;
         }
         return screenSize;
     }
@@ -122,7 +165,12 @@ export class Device {
      * @returns {boolean} True lub false
      */
     get isLandscape() {
-        return this.getOrientation().current === 'landscape';
+        if (window.screen.orientation && window.screen.orientation.type) {
+            return window.screen.orientation.type.toLowerCase().includes("landscape");
+        }
+        else {
+            return this.getOrientation().current === 'landscape';
+        }
     }
     ;
     /**
@@ -130,7 +178,12 @@ export class Device {
      * @returns {boolean} True lub false
      */
     get isPortrait() {
-        return this.getOrientation().current === 'portrait';
+        if (window.screen.orientation && window.screen.orientation.type) {
+            return window.screen.orientation.type.toLowerCase().includes("portrait");
+        }
+        else {
+            return this.getOrientation().current === 'portrait';
+        }
     }
     ;
 }

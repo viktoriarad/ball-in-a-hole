@@ -4,16 +4,25 @@ import { IOrientation, ISize, IPosition } from "../interfaces/gametypes.js";
 export class Device  implements IDevice {
   private motionPermission: boolean = false;
   public readonly isiOS: boolean;
-  private readonly screenSize: ISize;
+  public readonly isAndroid: boolean;
+  private screenSize: ISize;
   private readonly game: IGame;
 
   constructor(_game: IGame) {
     this.game = _game;
+    this.isAndroid = /android/i.test(navigator.userAgent);
     this.isiOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
     this.screenSize = this.defineScreenSize();
-
-    this.setOrientationChangeEventHandler();
   };
+
+  /**
+   * @returns {void}
+   */
+  public setupDeviceHandlers(): void {
+    this.setOrientationChangeEventHandler();
+    this.setResizeEventHandler();
+    this.checkFullScreenAPI();
+  }
 
   /**
    * Funkcja prosi o pozwolenie aby sie korzystac z API sensorow urzadzenia.
@@ -67,10 +76,29 @@ export class Device  implements IDevice {
   };
 
   /**
+   * Funkcja dodaje nasłuchiwanie na zmianę rozmiaru stronki (globalny obiekt window).
+   * @returns {void}
+   */
+  private setResizeEventHandler(): void {
+    window.addEventListener('resize', this.onResizeEvent.bind(this));
+  };
+
+  /**
+   * Funkcja obsluguje zdarzenia zmiany rozmiaru stronki.
+   * @returns {void}
+   */
+  private onResizeEvent(): void {
+    this.checkFullScreenAPI();
+    this.game.onResize(this.defineScreenSize());
+  };
+
+  /**
    * Funkcja obsluguje zdarzenia zmiany polozenia urzadzenia, przekazywuje te dane do glownego obiektu game
    * @returns {void}
    */
   private onOrientationEvent(e: DeviceOrientationEvent): void {
+    if (this.isPortrait) return;
+
     const x: number = parseFloat((<number>e.beta).toFixed(1));
     const y: number = parseFloat((<number>e.gamma).toFixed(1));
 
@@ -81,9 +109,27 @@ export class Device  implements IDevice {
    * Funkcja obsluguje zdarzenia zmiany orientacji urzadzenia
    * @returns {void}
    */
-  onOrientationChange(): void {
+  private onOrientationChange(): void {
+    this.screenSize = this.defineScreenSize();
     this.game.onOrientationChange();
   };
+
+  private checkFullScreenAPI(): void {
+    const fullScreenEnabled: boolean = document.fullscreenEnabled || document.webkitFullscreenEnabled;
+    const isInFullScreen: boolean = document.fullscreenElement || document.webkitFullscreenElement ? true : false;
+
+    if (fullScreenEnabled && !isInFullScreen) {
+      this.game.requestFullScreen();
+    }
+  }
+
+  public setFullScreen(): void {
+    if (document.body.requestFullscreen) {
+      document.body.requestFullscreen();
+    } else if (document.body.webkitRequestFullscreen) {
+      document.body.webkitRequestFullscreen();
+    }
+  }
 
   /**
    * Funkcja definiuje rozmiar ekranu urzadzenia w pixeliach
@@ -96,8 +142,8 @@ export class Device  implements IDevice {
       screenSize.width = window.screen.width;
       screenSize.height = window.screen.height;
     } else {
-      screenSize.width = window.innerWidth;
-      screenSize.height = window.innerHeight;
+      screenSize.width = window.outerWidth;
+      screenSize.height = window.outerHeight;
     }
 
     return screenSize;
@@ -135,7 +181,11 @@ export class Device  implements IDevice {
    * @returns {boolean} True lub false
    */
   get isLandscape(): boolean {
-    return this.getOrientation().current === 'landscape';
+    if (window.screen.orientation && window.screen.orientation.type) {
+      return window.screen.orientation.type.toLowerCase().includes("landscape");
+    } else {
+      return this.getOrientation().current === 'landscape';
+    }
   };
 
   /**
@@ -143,7 +193,11 @@ export class Device  implements IDevice {
    * @returns {boolean} True lub false
    */
   get isPortrait(): boolean {
-    return this.getOrientation().current === 'portrait';
+    if (window.screen.orientation && window.screen.orientation.type) {
+      return window.screen.orientation.type.toLowerCase().includes("portrait");
+    } else {
+      return this.getOrientation().current === 'portrait';
+    }
   };
 
 }

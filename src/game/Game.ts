@@ -6,7 +6,7 @@ import { Ball, Finish, Traps } from './gameobjects/index.js';
 export class Game implements IGame {
 
   private readonly device: IDevice;
-  private readonly fieldSize: ISize;
+  private fieldSize: ISize;
   private readonly view: IView;
   private readonly ball: IBall;
   private readonly finish: IFinish;
@@ -16,17 +16,18 @@ export class Game implements IGame {
 
   constructor(ballRadius: number) {
     this.device = new Device(this);
-    this.fieldSize = this.getFieldSize(this.device.getScreenSize());
+    this.fieldSize = this.defineFieldSize(this.device.getScreenSize());
 
     this.view = new View(this, this.fieldSize);
 
-    this.ball = new Ball(this.fieldSize, ballRadius);
-    this.finish = new Finish(this.fieldSize, ballRadius);
-    this.traps = new Traps(this.fieldSize, ballRadius);
+    this.ball = new Ball(ballRadius);
+    this.finish = new Finish(ballRadius);
+    this.traps = new Traps(ballRadius);
 
     this.state = new State();
     this.level = 0;
 
+    this.device.setupDeviceHandlers();
     this.updateOrientationViewOnInit();
   };
 
@@ -60,11 +61,12 @@ export class Game implements IGame {
   nextLevel(): void {
     this.level += 1;
 
-    this.ball.generateNewPosition();
-    this.finish.generateNewPosition();
-    this.traps.generateTraps(this.level, this.finish, this.ball);
+    this.ball.generateNewPosition(this.fieldSize);
+    this.finish.generateNewPosition(this.fieldSize);
+    this.traps.generateTraps(this.level, this.finish, this.ball, this.fieldSize);
 
     this.state.start();
+    this.render();
   };
 
   /**
@@ -97,12 +99,28 @@ export class Game implements IGame {
    * i mniejsza do wysykosci.
    * @returns {ISize}
    */
-  getFieldSize(screenSize: ISize): ISize {
+  private defineFieldSize(screenSize: ISize): ISize {
     return {
       width: screenSize.width > screenSize.height ? screenSize.width : screenSize.height,
       height: screenSize.width > screenSize.height ? screenSize.height : screenSize.width
     };
+  };
+
+  public onResize(screenSize: ISize): void {
+    this.fieldSize = this.defineFieldSize(screenSize);
+  };
+
+  public requestFullScreen(): void {
+    this.view.showFullScreenMsg();
+  };
+
+  public setFullScreen(): void {
+    this.device.setFullScreen();
   }
+
+  public getFieldSize(): ISize {
+    return this.fieldSize;
+  };
 
   /**
    * Funkcja konczy gre z przegranym wynikiem.

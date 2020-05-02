@@ -8,12 +8,12 @@ export interface ICircle {
 
 export interface IBall extends ICircle {
   moveBy(position: IPosition): void;
-  generateNewPosition(): void;
+  generateNewPosition(fieldSize: ISize): void;
 }
 
 export interface IFinish extends ICircle {
   checkIfBallGotInside(ball: ICircle): boolean;
-  generateNewPosition(): void;
+  generateNewPosition(fieldSize: ISize): void;
 }
 
 export interface IGame {
@@ -24,6 +24,10 @@ export interface IGame {
   accelerate(coords: IPosition): void;
   onOrientationChange(): void;
   onPressStartBtn(): void;
+  getFieldSize(): ISize;
+  onResize(screenSize: ISize): void;
+  setFullScreen(): void;
+  requestFullScreen(): void;
 }
 
 export interface IView {
@@ -36,6 +40,7 @@ export interface IView {
   onPause(): void;
   onGameOver(): void;
   onWin(): void;
+  showFullScreenMsg(): void;
 }
 
 export interface IDevice {
@@ -46,6 +51,8 @@ export interface IDevice {
   getOrientation(): IOrientation;
   requestSensorsPermission(): void;
   setDeviceOrientationEventHandler(): void;
+  setFullScreen(): void;
+  setupDeviceHandlers(): void;
 }
 
 export interface IState {
@@ -61,7 +68,7 @@ export interface IState {
 }
 
 export interface ITraps {
-  generateTraps(level: number, finishHole: ICircle, ball: ICircle): void;
+  generateTraps(level: number, finishHole: ICircle, ball: ICircle, fieldSize: ISize): void;
   checkIfBallGotInside(ball: ICircle): boolean;
   getAll(): Array<ICircle>;
 }

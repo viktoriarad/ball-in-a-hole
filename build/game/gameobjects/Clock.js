@@ -43,12 +43,12 @@ export class Clock {
     getValueString() {
         const hr = this.value.hours > 0 ?
             this.value.hours > 9 ?
-                this.value.hours + " " :
-                "0" + this.value.hours + " " :
+                this.value.hours + ":" :
+                "0" + this.value.hours + ":" :
             "";
         const min = this.value.minutes > 9 ?
-            this.value.minutes + " " :
-            "0" + this.value.minutes + " ";
+            this.value.minutes + ":" :
+            "0" + this.value.minutes + ":";
         const sec = this.value.seconds > 9 ?
             "" + this.value.seconds :
             "0" + this.value.seconds;

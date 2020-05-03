@@ -6,7 +6,7 @@ export class Clock implements IClock {
   private intervalId: number = 0;
 
   constructor() {
-    this.value = {hours: 0, minutes: 0, seconds: 0};
+    this.value = { hours: 0, minutes: 0, seconds: 0 };
   };
 
   private tick(): void {
@@ -46,13 +46,13 @@ export class Clock implements IClock {
   public getValueString(): string {
     const hr: string = this.value.hours > 0 ?
       this.value.hours > 9 ?
-        this.value.hours + " ":
-        "0" + this.value.hours + " ":
+        this.value.hours + ":":
+        "0" + this.value.hours + ":":
       "";
 
     const min: string = this.value.minutes > 9 ?
-      this.value.minutes + " ":
-      "0" + this.value.minutes + " ";
+      this.value.minutes + ":":
+      "0" + this.value.minutes + ":";
 
     const sec: string = this.value.seconds > 9 ?
       "" + this.value.seconds:

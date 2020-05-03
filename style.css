@@ -127,4 +127,16 @@ body {
 
 .game-panel > div {
     display: inline-block;
+    margin: 0 5px;
+}
+
+.pause-button {
+    width: 15px;
+    height: 15px;
+    background-color: black;
+}
+
+.pause-button::before {
+    content: 'II';
+    color: white;
 }

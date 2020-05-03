@@ -123,11 +123,16 @@ body {
     position: absolute;
     top:0;
     right: 0;
+    padding: 10px;
+    background-color: rgb(255, 255, 255);
+    opacity: 0.5;
 }
 
 .game-panel > div {
     display: inline-block;
     margin: 0 5px;
+    opacity: 1;
+    color: black;
 }
 
 .pause-button {

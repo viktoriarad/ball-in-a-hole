@@ -133,7 +133,8 @@ export class Game {
     ;
     addScore() {
         let currentScore = this.level * 10;
-        if (this.clock.getValueInSecs() < 10) {
+        const timeMax = Math.round(5 * this.level * 0.4);
+        if (this.clock.getValueInSecs() <= timeMax) {
             currentScore *= 1.5;
         }
         this.score += currentScore;

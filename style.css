@@ -121,7 +121,7 @@ body {
 
 .game-panel {
     position: absolute;
-    top:0;
+    top: 0;
     left: 0;
     right: 0;
     display: flex;
@@ -133,22 +133,22 @@ body {
 }
 
 .game-panel > div {
-    display: inline-block;
-    margin: 0 5px;
-    opacity: 1;
+    background: transparent;
     color: white;
+    font-weight: bold;
 }
 
 .pause-button {
     width: 30px;
     height: 30px;
+    text-align: center;
+    line-height: 30px;
+    font-size: 25px;
 }
 
 .pause-button::before {
     content: 'II';
     color: white;
-    text-align: center;
-    font-size: 20px;
+    font-size: 25px;
     line-height: 30px;
-    font-weight: bold;
 }

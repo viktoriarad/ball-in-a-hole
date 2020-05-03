@@ -155,7 +155,8 @@ export class Game implements IGame {
 
   private addScore(): void {
     let currentScore: number = this.level * 10;
-    if (this.clock.getValueInSecs() < 10) {
+    const timeMax: number = Math.round(5 * this.level * 0.4);
+    if (this.clock.getValueInSecs() <= timeMax) {
       currentScore *= 1.5;
     }
 

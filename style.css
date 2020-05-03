@@ -58,16 +58,16 @@ body {
 .pause-msg,
 .gameover-msg,
 .nextlevel-msg {
-    z-index: 2;
+    z-index: 3;
 }
 
 .fullscreen-msg {
-    z-index: 4;
+    z-index: 5;
     background-color: #e99a25;
 }
 
 .rotate-msg {
-    z-index: 3;
+    z-index: 4;
     background-color: #1b8de9;
 }
 
@@ -120,6 +120,7 @@ body {
 }
 
 .game-panel {
+    z-index: 2;
     position: absolute;
     top: 0;
     left: 0;

@@ -33,8 +33,12 @@ export class Traps implements ITraps {
 
     this.clearTraps();
 
-    for (let i = 0; i <= trapsAmount; i++) {
-      this.traps.push(this.generateTrap(radius, finishHole, ball, star, fieldSize));
+    while (this.traps.length <= trapsAmount) {
+      const generatedTrap: ICircle = this.generateTrap(radius, finishHole, ball, star, fieldSize);
+
+      if (generatedTrap.radius !== 0) {
+        this.traps.push(generatedTrap);
+      }
     }
   };
 
@@ -68,7 +72,7 @@ export class Traps implements ITraps {
     );
 
     if (trapCrossing || ballCrossing || finishCrossing || starCrossing) {
-      return this.generateTrap(radius, finishHole, ball, star, fieldSize);
+      return new Hole(0, 0, 0);
     } else {
       return new Hole(radius, x, y);
     }

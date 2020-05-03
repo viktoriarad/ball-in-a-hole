@@ -122,10 +122,13 @@ body {
 .game-panel {
     position: absolute;
     top:0;
+    left: 0;
     right: 0;
-    padding: 10px;
-    background-color: rgb(255, 255, 255);
-    opacity: 0.5;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    font-size: 20px;
+    font-family: Arial;
 }
 
 .game-panel > div {
@@ -136,8 +139,8 @@ body {
 }
 
 .pause-button {
-    width: 15px;
-    height: 15px;
+    width: 25px;
+    height: 25px;
     background-color: black;
 }
 

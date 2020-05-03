@@ -91,8 +91,8 @@ export class View implements IView {
   };
 
   public updateGamePanel(score: number, level: number, time: string): void {
-    this.scoreInfo.innerText = score.toString();
-    this.levelInfo.innerText = level.toString();
+    this.scoreInfo.innerText = "Score: " + score.toString();
+    this.levelInfo.innerText = "Level: " + level.toString();
     this.timeInfo.innerText = time;
   };
 

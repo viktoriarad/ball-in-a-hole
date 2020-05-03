@@ -3,7 +3,7 @@ import { IClock } from '../interfaces/gameobjects.js';
 
 export class Clock implements IClock {
   private value: ITime;
-  private intervalId: number = 0;
+  private intervalId: number = -1;
 
   constructor() {
     this.value = { hours: 0, minutes: 0, seconds: 0 };
@@ -24,12 +24,19 @@ export class Clock implements IClock {
 
   public start(): void {
     this.value = {hours: 0, minutes: 0, seconds: 0};
+    this.stopTick();
     this.intervalId = window.setInterval(this.tick.bind(this),1000);
   };
 
   public pause(): void {
-    window.clearInterval(this.intervalId);
+    this.stopTick();
   };
+
+  private stopTick(): void {
+    if (this.intervalId >= 0) {
+      window.clearInterval(this.intervalId);
+    }
+  }
 
   public resume(): void {
     this.intervalId = window.setInterval(this.tick.bind(this),1000);

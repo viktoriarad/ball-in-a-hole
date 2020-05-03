@@ -1,6 +1,6 @@
 export class Clock {
     constructor() {
-        this.intervalId = 0;
+        this.intervalId = -1;
         this.value = { hours: 0, minutes: 0, seconds: 0 };
     }
     ;
@@ -21,13 +21,19 @@ export class Clock {
     ;
     start() {
         this.value = { hours: 0, minutes: 0, seconds: 0 };
+        this.stopTick();
         this.intervalId = window.setInterval(this.tick.bind(this), 1000);
     }
     ;
     pause() {
-        window.clearInterval(this.intervalId);
+        this.stopTick();
     }
     ;
+    stopTick() {
+        if (this.intervalId >= 0) {
+            window.clearInterval(this.intervalId);
+        }
+    }
     resume() {
         this.intervalId = window.setInterval(this.tick.bind(this), 1000);
     }

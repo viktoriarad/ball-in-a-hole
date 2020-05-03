@@ -68,7 +68,7 @@ body {
 }
 
 .pause-msg {
-    background-color: rgba(255, 255, 255, 0.5);
+    background-color: rgba(241, 241, 241, 0.5);
 }
 
 .gameover-msg {
@@ -84,35 +84,102 @@ body {
 .pause-msg::before,
 .gameover-msg::before,
 .nextlevel-msg::before {
-    color: #ffffff;
-    text-transform: uppercase;
+    color: #333;
     text-align: center;
     font-weight: bold;
     font-size: 32px;
     position: absolute;
-    top: 50%;
+    top: 40%;
     left: 50%;
     transform: translate(-50%, -50%);
+    line-height: 45px;
+    font-family: arial;
 }
 
 .fullscreen-msg::before {
-    content: 'Please tap the screen to request full screen mode';
+    content: 'Tap the screen for full screen mode';
+
 }
 
 .rotate-msg::before {
-    content: 'Please rotate your device to landscape';
+    content: 'Rotate the device to landscape';
+}
+
+.pause-msg::before,
+.gameover-msg::before,
+.nextlevel-msg::before {
+    white-space: pre;
+    color: white;
+}
+
+.gameover-msg,
+.nextlevel-msg {
+    animation: popupAnimation .5s ease-in;
 }
 
 .pause-msg::before {
-    content: 'Game is paused. Tap to resume';
+    content: 'GAME IS PAUSED';
 }
 
 .gameover-msg::before {
-    content: 'Game over. Tap to restart';
+    content: 'GAME OVER \00000a Tap to restart';
 }
 
 .nextlevel-msg::before {
-    content: 'You won. Tap to continue next level';
+    content: 'YOU WON \00000a Tap to continue next level';
+}
+
+.rotate-icon {
+    background-color: transparent;
+    width: 40%;
+    position: absolute;
+    top: 55%;
+    left: 30%;
+    animation: rotateAnimation 3s linear infinite;
+}
+
+.fullscreen-icon {
+    background-color: transparent;
+    width: 40%;
+    position: absolute;
+    top: 60%;
+    left: 30%;
+}
+
+.fullscreen-icon-line {
+    width: 20%;
+    background-color: transparent;
+    position: absolute;
+    top: 59%;
+    left: 48%;
+    animation: touchAnimation 2s infinite linear;
+}
+
+.pause-icon {
+    background-color: transparent;
+    width: 10%;
+    position: absolute;
+    top: 55%;
+    left: 45%;
+    animation: pauseAnimation 2s infinite linear;
+}
+
+.gameover-icon {
+    background-color: transparent;
+    width: 20%;
+    position: absolute;
+    top: 60%;
+    left: 40%;
+    animation: pauseAnimation 2s infinite linear;
+}
+
+.nextlevel-icon {
+    background-color: transparent;
+    width: 10%;
+    position: absolute;
+    top: 60%;
+    left: 40%;
+    animation: nextLevelAnimation 2s infinite linear normal;
 }
 
 .game-panel {

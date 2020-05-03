@@ -1,0 +1,11 @@
+@media (orientation: landscape) {
+    .fullscreen-icon-line {
+        width: 5%;
+        left: 49.5%;
+    }
+
+    .fullscreen-icon {
+        width: 10%;
+        left: 45%;
+    }
+}

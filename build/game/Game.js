@@ -128,6 +128,15 @@ export class Game {
      */
     win() {
         this.state.win();
+        this.addScore();
+    }
+    ;
+    addScore() {
+        let currentScore = this.level * 10;
+        if (this.clock.getValueInSecs() < 10) {
+            currentScore *= 1.5;
+        }
+        this.score += currentScore;
     }
     ;
     /**

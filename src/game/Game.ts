@@ -150,6 +150,16 @@ export class Game implements IGame {
    */
   public win(): void {
     this.state.win();
+    this.addScore();
+  };
+
+  private addScore(): void {
+    let currentScore: number = this.level * 10;
+    if (this.clock.getValueInSecs() < 10) {
+      currentScore *= 1.5;
+    }
+
+    this.score += currentScore;
   };
 
   /**

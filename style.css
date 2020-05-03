@@ -32,10 +32,6 @@ body {
     content:'START';
 }
 
-.invisible {
-    display:none;
-}
-
 .game-canvas {
     position: absolute;
     top: 0;
@@ -156,4 +152,8 @@ body {
 
 .iPhoneWithHomeIndicator .game-panel {
     margin-top: 20px;
+}
+
+.invisible {
+    display:none;
 }

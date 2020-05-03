@@ -198,7 +198,7 @@ export class Game implements IGame {
    * @returns {void}
    */
   public onOrientationChange(): void {
-    this.state.pause();
+    this.pause();
 
     if (this.device.isPortrait) {
       this.view.onPortrait();

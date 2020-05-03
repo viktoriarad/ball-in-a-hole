@@ -195,7 +195,7 @@ export class View implements IView {
   };
 
   /**
-   * Funkcja oblsuguje event nacisniecia przycisku Start
+   * Funkcja obsluguje event nacisniecia przycisku Start
    * @returns {void}
    */
   private onPressStartGameBtn(): void {

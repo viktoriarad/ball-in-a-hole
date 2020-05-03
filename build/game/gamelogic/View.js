@@ -164,7 +164,7 @@ export class View {
     }
     ;
     /**
-     * Funkcja oblsuguje event nacisniecia przycisku Start
+     * Funkcja obsluguje event nacisniecia przycisku Start
      * @returns {void}
      */
     onPressStartGameBtn() {

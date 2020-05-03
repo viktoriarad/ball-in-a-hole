@@ -175,7 +175,7 @@ export class Game {
      * @returns {void}
      */
     onOrientationChange() {
-        this.state.pause();
+        this.pause();
         if (this.device.isPortrait) {
             this.view.onPortrait();
         }

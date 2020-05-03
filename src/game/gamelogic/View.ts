@@ -1,4 +1,4 @@
-import { IView, IGame, IBall, ICircle, IGameObjects } from "../interfaces/gameobjects.js";
+import { IView, IGame, IBall, ICircle, IStar, IGameObjects } from "../interfaces/gameobjects.js";
 import { ISize } from "../interfaces/gametypes.js";
 
 export class View implements IView {
@@ -228,6 +228,7 @@ export class View implements IView {
     const ball: IBall = objectsToRender.ball;
     const traps: Array<ICircle> = objectsToRender.traps;
     const finish: ICircle = objectsToRender.finish;
+    const star: IStar = objectsToRender.star;
 
     this.ctx.clearRect(0, 0, this.fieldSize.width, this.fieldSize.height);
     this.ctx.fillStyle = "#00135d";
@@ -240,6 +241,18 @@ export class View implements IView {
       this.ctx.fill();
       this.ctx.closePath();
     });
+
+    if (star.visible) {
+      this.ctx.beginPath();
+      this.ctx.moveTo(star.drawPoints[0].x, star.drawPoints[0].y);
+      for (let i: number = 1; i < star.drawPoints.length; i++) {
+        this.ctx.lineTo(star.drawPoints[i].x, star.drawPoints[i].y)
+      }
+      this.ctx.lineTo(star.drawPoints[0].x, star.drawPoints[0].y);
+      this.ctx.fillStyle = "#e9e402";
+      this.ctx.fill();
+      this.ctx.closePath();
+    }
 
     this.ctx.beginPath();
     this.ctx.arc(

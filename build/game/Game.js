@@ -1,11 +1,13 @@
 import { Device, View, State } from './gamelogic/index.js';
-import { Ball, Finish, Traps } from './gameobjects/index.js';
+import { Ball, Finish, Traps, Star } from './gameobjects/index.js';
 export class Game {
     constructor(ballRadius) {
+        this.bonus = true;
         this.device = new Device(this);
         this.fieldSize = this.defineFieldSize(this.device.getScreenSize());
         this.view = new View(this, this.fieldSize);
         this.ball = new Ball(ballRadius);
+        this.star = new Star(ballRadius);
         this.finish = new Finish(ballRadius);
         this.traps = new Traps(ballRadius);
         this.state = new State();
@@ -44,9 +46,11 @@ export class Game {
      */
     nextLevel() {
         this.level += 1;
+        this.bonus = true;
         this.ball.generateNewPosition(this.fieldSize);
         this.finish.generateNewPosition(this.fieldSize);
-        this.traps.generateTraps(this.level, this.finish, this.ball, this.fieldSize);
+        this.star.generate(this.fieldSize);
+        this.traps.generateTraps(this.level, this.finish, this.ball, this.star, this.fieldSize);
         this.state.start();
         this.render();
     }
@@ -127,6 +131,7 @@ export class Game {
         return {
             ball: this.ball,
             traps: this.traps.getAll(),
+            star: this.star,
             finish: this.finish
         };
     }
@@ -210,8 +215,16 @@ export class Game {
         else if (this.gotFinish()) {
             this.win();
         }
+        else if (this.gotStar() && this.bonus) {
+            this.bonus = false;
+            this.star.hide();
+            this.getBonus();
+        }
     }
     ;
+    getBonus() {
+        this.traps.decreaseTraps(2);
+    }
     /**
      * Funkcja sprawdza czy pilka nie trafila do czerwonej pulapki
      * @returns {boolean} True or false
@@ -226,6 +239,14 @@ export class Game {
      */
     gotFinish() {
         return this.finish.checkIfBallGotInside(this.ball);
+    }
+    ;
+    /**
+     * Funkcja sprawdza czy pilka nie trafila do zielonej dziury (finiszu)
+     * @returns {boolean} True or false
+     */
+    gotStar() {
+        return this.star.checkIfBallGotInside(this.ball);
     }
     ;
     /**

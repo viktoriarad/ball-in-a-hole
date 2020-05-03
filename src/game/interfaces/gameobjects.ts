@@ -56,6 +56,8 @@ export interface IView {
 
 export interface IDevice {
   isiOS: boolean
+  iPhoneWithHomeIndicator: boolean;
+  isAndroid: boolean;
   isPortrait: boolean;
   isLandscape: boolean;
   getScreenSize(): ISize;

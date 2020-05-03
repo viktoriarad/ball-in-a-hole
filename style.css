@@ -153,3 +153,7 @@ body {
     font-size: 25px;
     line-height: 30px;
 }
+
+.iPhoneWithHomeIndicator .game-panel {
+    margin-top: 20px;
+}

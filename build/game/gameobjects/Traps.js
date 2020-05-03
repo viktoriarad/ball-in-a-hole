@@ -21,12 +21,12 @@ export class Traps {
      * Funkcja generuje wszystkie czerwone pulapki
      * @returns {void}
      */
-    generateTraps(level, finishHole, ball, fieldSize) {
+    generateTraps(level, finishHole, ball, star, fieldSize) {
         const trapsAmount = 5 + level * 2;
         const radius = this.ballRadius + level;
         this.clearTraps();
         for (let i = 0; i <= trapsAmount; i++) {
-            this.traps.push(this.generateTrap(radius, finishHole, ball, fieldSize));
+            this.traps.push(this.generateTrap(radius, finishHole, ball, star, fieldSize));
         }
     }
     ;
@@ -34,7 +34,7 @@ export class Traps {
      * Funkcja generuje pulapke i sprawdza aby sie nie znajdowala zablisko obok innych elementow gry
      * @returns {void}
      */
-    generateTrap(radius, finishHole, ball, fieldSize) {
+    generateTrap(radius, finishHole, ball, star, fieldSize) {
         const x = Math.floor(Math.random() * (fieldSize.width - radius * 2) + radius);
         const y = Math.floor(Math.random() * (fieldSize.height - radius * 2) + radius);
         const trapCrossing = this.traps.some((hole) => {
@@ -46,8 +46,10 @@ export class Traps {
             Math.abs(ball.y - y) - ball.radius - radius <= radius);
         const finishCrossing = (Math.abs(finishHole.x - x) - finishHole.radius - radius <= 0 &&
             Math.abs(finishHole.y - y) - finishHole.radius - radius <= 0);
-        if (trapCrossing || ballCrossing || finishCrossing) {
-            return this.generateTrap(radius, finishHole, ball, fieldSize);
+        const starCrossing = (Math.abs(star.x - x) - star.radius - radius <= 0 &&
+            Math.abs(star.y - y) - star.radius - radius <= 0);
+        if (trapCrossing || ballCrossing || finishCrossing || starCrossing) {
+            return this.generateTrap(radius, finishHole, ball, star, fieldSize);
         }
         else {
             return new Hole(radius, x, y);
@@ -60,6 +62,23 @@ export class Traps {
      */
     getAll() {
         return this.traps;
+    }
+    ;
+    /**
+     * Funkcja zmniijsza ilosc pulapek o podana wartosc razy.
+     * @returns {void}
+     */
+    decreaseTraps(rate) {
+        const decreasedTraps = [];
+        for (let i = 0; i < this.traps.length; i++) {
+            if (i % rate === 0) {
+                decreasedTraps.push(this.traps[i]);
+            }
+        }
+        this.traps.length = 0;
+        for (let i = 0; i < decreasedTraps.length; i++) {
+            this.traps.push(decreasedTraps[i]);
+        }
     }
     ;
     /**

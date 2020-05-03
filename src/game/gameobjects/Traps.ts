@@ -27,14 +27,14 @@ export class Traps implements ITraps {
    * Funkcja generuje wszystkie czerwone pulapki
    * @returns {void}
    */
-  public generateTraps(level: number, finishHole: ICircle, ball: ICircle, fieldSize: ISize): void {
+  public generateTraps(level: number, finishHole: ICircle, ball: ICircle, star: ICircle, fieldSize: ISize): void {
     const trapsAmount: number = 5 + level * 2;
     const radius: number = this.ballRadius + level;
 
     this.clearTraps();
 
     for (let i = 0; i <= trapsAmount; i++) {
-      this.traps.push(this.generateTrap(radius, finishHole, ball, fieldSize));
+      this.traps.push(this.generateTrap(radius, finishHole, ball, star, fieldSize));
     }
   };
 
@@ -42,7 +42,7 @@ export class Traps implements ITraps {
    * Funkcja generuje pulapke i sprawdza aby sie nie znajdowala zablisko obok innych elementow gry
    * @returns {void}
    */
-  private generateTrap(radius: number, finishHole: ICircle, ball: ICircle, fieldSize: ISize): ICircle {
+  private generateTrap(radius: number, finishHole: ICircle, ball: ICircle, star: ICircle, fieldSize: ISize): ICircle {
     const x: number = Math.floor(Math.random() * (fieldSize.width - radius * 2) + radius);
     const y: number = Math.floor(Math.random() * (fieldSize.height - radius * 2) + radius);
 
@@ -56,13 +56,19 @@ export class Traps implements ITraps {
       Math.abs(ball.x - x) - ball.radius - radius <= radius &&
       Math.abs(ball.y - y) - ball.radius - radius <= radius
     );
+
     const finishCrossing: boolean = (
       Math.abs(finishHole.x - x) - finishHole.radius - radius <= 0 &&
       Math.abs(finishHole.y - y) - finishHole.radius - radius <= 0
     );
 
-    if (trapCrossing || ballCrossing || finishCrossing) {
-      return this.generateTrap(radius, finishHole, ball, fieldSize);
+    const starCrossing: boolean = (
+      Math.abs(star.x - x) - star.radius - radius <= 0 &&
+      Math.abs(star.y - y) - star.radius - radius <= 0
+    );
+
+    if (trapCrossing || ballCrossing || finishCrossing || starCrossing) {
+      return this.generateTrap(radius, finishHole, ball, star, fieldSize);
     } else {
       return new Hole(radius, x, y);
     }
@@ -74,6 +80,27 @@ export class Traps implements ITraps {
    */
   public getAll(): Array<ICircle> {
     return this.traps;
+  };
+
+  /**
+   * Funkcja zmniijsza ilosc pulapek o podana wartosc razy.
+   * @returns {void}
+   */
+  public decreaseTraps(rate: number): void {
+    const decreasedTraps: Array<ICircle> = [];
+
+    for (let i: number = 0; i < this.traps.length; i++) {
+      if (i % rate === 0) {
+        decreasedTraps.push(this.traps[i]);
+      }
+    }
+
+    this.traps.length = 0;
+
+    for (let i: number = 0; i < decreasedTraps.length; i++) {
+      this.traps.push(decreasedTraps[i]);
+    }
+
   };
 
   /**

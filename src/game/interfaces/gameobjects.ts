@@ -68,13 +68,23 @@ export interface IState {
 }
 
 export interface ITraps {
-  generateTraps(level: number, finishHole: ICircle, ball: ICircle, fieldSize: ISize): void;
+  generateTraps(level: number, finishHole: ICircle, ball: ICircle, star: ICircle, fieldSize: ISize): void;
   checkIfBallGotInside(ball: ICircle): boolean;
   getAll(): Array<ICircle>;
+  decreaseTraps(rate: number): void;
 }
 
 export interface IGameObjects {
   ball: IBall;
   traps: Array<ICircle>;
   finish: ICircle;
+  star: IStar;
+}
+
+export interface IStar extends ICircle {
+  drawPoints: Array<IPosition>;
+  visible: boolean;
+  checkIfBallGotInside(ball: ICircle): boolean;
+  generate(fieldSize: ISize): void;
+  hide(): void;
 }

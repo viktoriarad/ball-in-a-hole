@@ -206,6 +206,7 @@ export class View {
         const ball = objectsToRender.ball;
         const traps = objectsToRender.traps;
         const finish = objectsToRender.finish;
+        const star = objectsToRender.star;
         this.ctx.clearRect(0, 0, this.fieldSize.width, this.fieldSize.height);
         this.ctx.fillStyle = "#00135d";
         this.ctx.fillRect(0, 0, this.fieldSize.width, this.fieldSize.height);
@@ -216,6 +217,17 @@ export class View {
             this.ctx.fill();
             this.ctx.closePath();
         });
+        if (star.visible) {
+            this.ctx.beginPath();
+            this.ctx.moveTo(star.drawPoints[0].x, star.drawPoints[0].y);
+            for (let i = 1; i < star.drawPoints.length; i++) {
+                this.ctx.lineTo(star.drawPoints[i].x, star.drawPoints[i].y);
+            }
+            this.ctx.lineTo(star.drawPoints[0].x, star.drawPoints[0].y);
+            this.ctx.fillStyle = "#e9e402";
+            this.ctx.fill();
+            this.ctx.closePath();
+        }
         this.ctx.beginPath();
         this.ctx.arc(finish.x, finish.y, finish.radius, 0, Math.PI * 2);
         this.ctx.fillStyle = "#2bc932";

@@ -1,7 +1,7 @@
-import { IBall, IFinish, IView, IDevice, ITraps, IState, IGame, IGameObjects } from "./interfaces/gameobjects.js";
+import { IBall, IFinish, IStar, IView, IDevice, ITraps, IState, IGame, IGameObjects } from "./interfaces/gameobjects.js";
 import { ISize, IOrientation, IPosition } from "./interfaces/gametypes.js";
 import { Device, View, State } from './gamelogic/index.js';
-import { Ball, Finish, Traps } from './gameobjects/index.js';
+import { Ball, Finish, Traps, Star } from './gameobjects/index.js';
 
 export class Game implements IGame {
 
@@ -10,9 +10,11 @@ export class Game implements IGame {
   private readonly view: IView;
   private readonly ball: IBall;
   private readonly finish: IFinish;
+  private readonly star: IStar;
   private readonly traps: ITraps;
   private state: IState;
   private level: number;
+  private bonus: boolean = true;
 
   constructor(ballRadius: number) {
     this.device = new Device(this);
@@ -21,6 +23,7 @@ export class Game implements IGame {
     this.view = new View(this, this.fieldSize);
 
     this.ball = new Ball(ballRadius);
+    this.star = new Star(ballRadius);
     this.finish = new Finish(ballRadius);
     this.traps = new Traps(ballRadius);
 
@@ -60,10 +63,12 @@ export class Game implements IGame {
    */
   nextLevel(): void {
     this.level += 1;
+    this.bonus = true;
 
     this.ball.generateNewPosition(this.fieldSize);
     this.finish.generateNewPosition(this.fieldSize);
-    this.traps.generateTraps(this.level, this.finish, this.ball, this.fieldSize);
+    this.star.generate(this.fieldSize);
+    this.traps.generateTraps(this.level, this.finish, this.ball, this.star, this.fieldSize);
 
     this.state.start();
     this.render();
@@ -146,6 +151,7 @@ export class Game implements IGame {
     return {
       ball: this.ball,
       traps: this.traps.getAll(),
+      star: this.star,
       finish: this.finish
     }
   };
@@ -227,8 +233,16 @@ export class Game implements IGame {
       this.gameOver();
     } else if (this.gotFinish()) {
       this.win();
+    } else if (this.gotStar() && this.bonus) {
+      this.bonus = false;
+      this.star.hide();
+      this.getBonus();
     }
   };
+
+  private getBonus(): void {
+    this.traps.decreaseTraps(2);
+  }
 
   /**
    * Funkcja sprawdza czy pilka nie trafila do czerwonej pulapki
@@ -244,6 +258,14 @@ export class Game implements IGame {
    */
   private gotFinish(): boolean {
     return this.finish.checkIfBallGotInside(this.ball);
+  };
+
+  /**
+   * Funkcja sprawdza czy pilka nie trafila do zielonej dziury (finiszu)
+   * @returns {boolean} True or false
+   */
+  private gotStar(): boolean {
+    return this.star.checkIfBallGotInside(this.ball);
   };
 
   /**

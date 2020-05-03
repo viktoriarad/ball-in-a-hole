@@ -12,6 +12,11 @@ export class View implements IView {
   private readonly pauseMsg: HTMLElement;
   private readonly gameOverMsg: HTMLElement;
   private readonly nextLevelMsg: HTMLElement;
+  private readonly gamePanel: HTMLElement;
+  private readonly timeInfo: HTMLElement;
+  private readonly scoreInfo: HTMLElement;
+  private readonly levelInfo: HTMLElement;
+  private readonly pauseButton: HTMLElement;
   private readonly startGameBtn: HTMLElement;
 
   constructor(_game: IGame, _fieldSize: ISize) {
@@ -52,6 +57,21 @@ export class View implements IView {
     this.startGameBtn = this.createHTMLElement("button", "start-game");
     this.addHTMLElement(this.body, this.startGameBtn);
     this.addEventListener(this.startGameBtn, "click", this.onPressStartGameBtn.bind(this));
+
+    this.gamePanel = this.createHTMLElement("div", "game-panel");
+    this.gamePanel.classList.add("invisible");
+    this.timeInfo = this.createHTMLElement("div", "time-info");
+    this.scoreInfo = this.createHTMLElement("div", "score-info");
+    this.levelInfo = this.createHTMLElement("div", "level-info");
+    this.pauseButton = this.createHTMLElement("div", "pause-button");
+    this.addEventListener(this.pauseButton, "click", this.onClickPause.bind(this));
+
+    this.addHTMLElement(this.gamePanel, this.scoreInfo);
+    this.addHTMLElement(this.gamePanel, this.timeInfo);
+    this.addHTMLElement(this.gamePanel, this.levelInfo);
+    this.addHTMLElement(this.gamePanel, this.pauseButton);
+
+    this.addHTMLElement(this.body, this.gamePanel);
   };
 
   /**
@@ -69,6 +89,16 @@ export class View implements IView {
    */
   private updateFieldSize(): void {
     this.fieldSize = this.game.getFieldSize();
+  };
+
+  public updateGamePanel(score: number, level: number, time: string): void {
+    this.scoreInfo.innerText = "Score: " + score.toString();
+    this.levelInfo.innerText = "Level: " + level.toString();
+    this.timeInfo.innerText = time;
+  };
+
+  public updateTimeInfo(time: string): void {
+    this.timeInfo.innerText = time;
   };
 
   /**
@@ -141,6 +171,11 @@ export class View implements IView {
     this.game.resume();
   };
 
+  private onClickPause(): void {
+    this.onPause();
+    this.game.pause();
+  }
+
   /**
    * Funkcja oblsuguje event nacisniecia komunikata z przegranej
    * @returns {void}
@@ -160,12 +195,13 @@ export class View implements IView {
   };
 
   /**
-   * Funkcja oblsuguje event nacisniecia przycisku Start
+   * Funkcja obsluguje event nacisniecia przycisku Start
    * @returns {void}
    */
   private onPressStartGameBtn(): void {
     this.updateFieldSize();
     this.updateCanvasSize();
+    this.gamePanel.classList.remove("invisible");
     this.game.onPressStartBtn();
   };
 

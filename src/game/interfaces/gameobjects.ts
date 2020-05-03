@@ -6,6 +6,14 @@ export interface ICircle {
   radius: number;
 }
 
+export interface IClock {
+  start(): void;
+  pause(): void;
+  resume(): void;
+  getValueInSecs(): number;
+  getValueString(): string;
+}
+
 export interface IBall extends ICircle {
   moveBy(position: IPosition): void;
   generateNewPosition(fieldSize: ISize): void;
@@ -20,6 +28,7 @@ export interface IGame {
   start(): void;
   resume(): void;
   nextLevel(): void;
+  pause(): void;
   restart(): void;
   accelerate(coords: IPosition): void;
   onOrientationChange(): void;
@@ -41,10 +50,14 @@ export interface IView {
   onGameOver(): void;
   onWin(): void;
   showFullScreenMsg(): void;
+  updateGamePanel(score: number, level: number, time: string): void;
+  updateTimeInfo(time: string): void;
 }
 
 export interface IDevice {
   isiOS: boolean
+  iPhoneWithHomeIndicator: boolean;
+  isAndroid: boolean;
   isPortrait: boolean;
   isLandscape: boolean;
   getScreenSize(): ISize;

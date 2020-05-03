@@ -4,7 +4,17 @@ export class Device {
         this.game = _game;
         this.isAndroid = /android/i.test(navigator.userAgent);
         this.isiOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+        this.iPhoneWithHomeIndicator = this.isiPhoneWithHomeIndicator();
         this.screenSize = this.defineScreenSize();
+        if (this.isAndroid) {
+            document.body.classList.add('android');
+        }
+        else if (this.isiOS) {
+            document.body.classList.add('iOS');
+            if (this.iPhoneWithHomeIndicator) {
+                document.body.classList.add('iPhoneWithHomeIndicator');
+            }
+        }
     }
     ;
     /**
@@ -15,6 +25,27 @@ export class Device {
         this.setResizeEventHandler();
         this.checkFullScreenAPI();
     }
+    ;
+    /** Funkcja definiuje czy urzadzenie posdiada home indicator jak iPhone X
+     * @returns {boolean}
+     */
+    isiPhoneWithHomeIndicator() {
+        const ratio = window.devicePixelRatio || 1;
+        const screen = {
+            width: window.screen.height * ratio,
+            height: window.screen.height * ratio,
+        };
+        const hasDimensions = (size) => {
+            return (screen.width === size.width && screen.height === screen.height) ||
+                (screen.width === size.height && screen.height === screen.width);
+        };
+        const isIphoneX = hasDimensions({ width: 1125, height: 2436 });
+        const isIphoneXS = hasDimensions({ width: 1125, height: 2436 });
+        const isIphoneXSMax = hasDimensions({ width: 1242, height: 2688 });
+        const isIphoneXR = hasDimensions({ width: 828, height: 1792 });
+        return (isIphoneX || isIphoneXS || isIphoneXSMax || isIphoneXR);
+    }
+    ;
     /**
      * Funkcja prosi o pozwolenie aby sie korzystac z API sensorow urzadzenia.
      * @returns {boolean} True lub false jesli pozwolenie nie zostalo nadane.

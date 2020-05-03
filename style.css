@@ -32,10 +32,6 @@ body {
     content:'START';
 }
 
-.invisible {
-    display:none;
-}
-
 .game-canvas {
     position: absolute;
     top: 0;
@@ -58,16 +54,16 @@ body {
 .pause-msg,
 .gameover-msg,
 .nextlevel-msg {
-    z-index: 2;
+    z-index: 3;
 }
 
 .fullscreen-msg {
-    z-index: 4;
+    z-index: 5;
     background-color: #e99a25;
 }
 
 .rotate-msg {
-    z-index: 3;
+    z-index: 4;
     background-color: #1b8de9;
 }
 
@@ -117,4 +113,47 @@ body {
 
 .nextlevel-msg::before {
     content: 'You won. Tap to continue next level';
+}
+
+.game-panel {
+    z-index: 2;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    font-size: 20px;
+    font-family: Arial;
+    background: transparent;
+}
+
+.game-panel > div {
+    background: transparent;
+    color: white;
+    font-weight: bold;
+}
+
+.pause-button {
+    width: 30px;
+    height: 30px;
+    text-align: center;
+    line-height: 30px;
+    font-size: 25px;
+}
+
+.pause-button::before {
+    content: 'II';
+    color: white;
+    font-size: 25px;
+    line-height: 30px;
+}
+
+.iPhoneWithHomeIndicator .game-panel {
+    margin-top: 20px;
+}
+
+.invisible {
+    display:none;
 }

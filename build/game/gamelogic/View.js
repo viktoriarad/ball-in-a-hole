@@ -31,6 +31,7 @@ export class View {
         this.addHTMLElement(this.body, this.startGameBtn);
         this.addEventListener(this.startGameBtn, "click", this.onPressStartGameBtn.bind(this));
         this.gamePanel = this.createHTMLElement("div", "game-panel");
+        this.gamePanel.classList.add("invisible");
         this.timeInfo = this.createHTMLElement("div", "time-info");
         this.scoreInfo = this.createHTMLElement("div", "score-info");
         this.levelInfo = this.createHTMLElement("div", "level-info");
@@ -169,6 +170,7 @@ export class View {
     onPressStartGameBtn() {
         this.updateFieldSize();
         this.updateCanvasSize();
+        this.gamePanel.classList.remove("invisible");
         this.game.onPressStartBtn();
     }
     ;

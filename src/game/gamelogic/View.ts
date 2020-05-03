@@ -58,6 +58,30 @@ export class View implements IView {
     this.addHTMLElement(this.body, this.startGameBtn);
     this.addEventListener(this.startGameBtn, "click", this.onPressStartGameBtn.bind(this));
 
+    const rotateMsgImg: HTMLImageElement = <HTMLImageElement>this.createHTMLElement("img", "rotate-icon");
+    rotateMsgImg.src = 'images/rotate-icon.png';
+    this.addHTMLElement(this.rotateMsg, rotateMsgImg);
+
+    const fullScreenMsgImg: HTMLImageElement = <HTMLImageElement>this.createHTMLElement("img", "fullscreen-icon");
+    fullScreenMsgImg.src = 'images/fullscreen-icon.png';
+    this.addHTMLElement(this.fullScreenMsg, fullScreenMsgImg);
+
+    const fullScreenMsgImgSecond: HTMLImageElement = <HTMLImageElement>this.createHTMLElement("img", "fullscreen-icon-line");
+    fullScreenMsgImgSecond.src = 'images/fullscreen-icon-line.png';
+    this.addHTMLElement(this.fullScreenMsg, fullScreenMsgImgSecond);
+
+    const pauseMsgImg: HTMLImageElement = <HTMLImageElement>this.createHTMLElement("img", "pause-icon");
+    pauseMsgImg.src = 'images/pause-icon.png';
+    this.addHTMLElement(this.pauseMsg, pauseMsgImg);
+
+    const gameOverMsgImg: HTMLImageElement = <HTMLImageElement>this.createHTMLElement("img", "gameover-icon");
+    gameOverMsgImg.src = 'images/gameover-icon.png';
+    this.addHTMLElement(this.gameOverMsg, gameOverMsgImg);
+
+    const nextLevelMsgImg: HTMLImageElement = <HTMLImageElement>this.createHTMLElement("img", "nextlevel-icon");
+    nextLevelMsgImg.src = 'images/nextlevel-icon.png';
+    this.addHTMLElement(this.nextLevelMsg, nextLevelMsgImg);
+
     this.gamePanel = this.createHTMLElement("div", "game-panel");
     this.gamePanel.classList.add("invisible");
     this.timeInfo = this.createHTMLElement("div", "time-info");

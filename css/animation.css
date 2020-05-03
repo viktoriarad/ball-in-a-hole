@@ -1,0 +1,65 @@
+@keyframes popupAnimation {
+    0% {
+        transform: scale(0) rotate(0deg);
+    }
+
+    100% {
+        transform: scale(1) rotate(-540deg);
+    }
+}
+
+@keyframes rotateAnimation {
+    0% {
+        transform: rotate(0);
+    }
+
+    50% {
+        transform: rotate(-90deg);
+    }
+
+    90% {
+        transform: rotate(-90deg);
+    }
+
+    100% {
+        transform: rotate(0);
+    }
+}
+
+@keyframes touchAnimation {
+    0% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.2);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+@keyframes pauseAnimation {
+    0% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.2);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+@keyframes nextLevelAnimation {
+    0% {
+        left: 40%;
+    }
+
+    100% {
+        left: 50%;
+    }
+}

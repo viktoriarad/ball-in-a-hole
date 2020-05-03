@@ -1,7 +1,7 @@
-import { IBall, IFinish, IStar, IView, IDevice, ITraps, IState, IGame, IGameObjects } from "./interfaces/gameobjects.js";
+import { IBall, IFinish, IStar, IView, IDevice, ITraps, IState, IGame, IGameObjects, IClock } from "./interfaces/gameobjects.js";
 import { ISize, IOrientation, IPosition } from "./interfaces/gametypes.js";
 import { Device, View, State } from './gamelogic/index.js';
-import { Ball, Finish, Traps, Star } from './gameobjects/index.js';
+import { Ball, Finish, Traps, Star, Clock } from './gameobjects/index.js';
 
 export class Game implements IGame {
 
@@ -15,6 +15,8 @@ export class Game implements IGame {
   private state: IState;
   private level: number;
   private bonus: boolean = true;
+  private score: number = 0;
+  private clock: IClock;
 
   constructor(ballRadius: number) {
     this.device = new Device(this);
@@ -26,6 +28,7 @@ export class Game implements IGame {
     this.star = new Star(ballRadius);
     this.finish = new Finish(ballRadius);
     this.traps = new Traps(ballRadius);
+    this.clock = new Clock();
 
     this.state = new State();
     this.level = 0;
@@ -71,6 +74,9 @@ export class Game implements IGame {
     this.traps.generateTraps(this.level, this.finish, this.ball, this.star, this.fieldSize);
 
     this.state.start();
+    this.clock.start();
+
+    this.view.updateGamePanel(this.score, this.level, this.clock.getValueString());
     this.render();
   };
 
@@ -78,24 +84,27 @@ export class Game implements IGame {
    * Funkcja kontynuje gre po pausie.
    * @returns {void}
    */
-  resume(): void {
+  public resume(): void {
     this.state.start();
+    this.clock.resume();
   };
 
   /**
    * Funkcja zatryzumje gre na pausie.
    * @returns {void}
    */
-  pause(): void {
+  public pause(): void {
     this.state.pause();
+    this.clock.pause();
   };
 
   /**
    * Funkcja restartuje gre.
    * @returns {void}
    */
-  restart(): void {
+  public restart(): void {
     this.level = 0;
+    this.score = 0;
     this.nextLevel();
   };
 
@@ -276,6 +285,7 @@ export class Game implements IGame {
     if (!this.state.isActive()) return;
 
     const objectsToRender: IGameObjects = this.getGameObjects();
+    this.view.updateTimeInfo(this.clock.getValueString());
     this.view.render(objectsToRender);
   };
 }

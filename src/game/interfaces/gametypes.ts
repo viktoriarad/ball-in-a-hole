@@ -3,6 +3,12 @@ export interface IPosition {
   y: number;
 }
 
+export interface ITime {
+  hours: number;
+  minutes: number;
+  seconds: number;
+}
+
 export interface ISize {
   width: number;
   height: number;

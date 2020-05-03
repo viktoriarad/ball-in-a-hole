@@ -118,3 +118,13 @@ body {
 .nextlevel-msg::before {
     content: 'You won. Tap to continue next level';
 }
+
+.game-panel {
+    position: absolute;
+    top:0;
+    right: 0;
+}
+
+.game-panel > div {
+    display: inline-block;
+}

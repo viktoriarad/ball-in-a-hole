@@ -1,8 +1,9 @@
 import { Device, View, State } from './gamelogic/index.js';
-import { Ball, Finish, Traps, Star } from './gameobjects/index.js';
+import { Ball, Finish, Traps, Star, Clock } from './gameobjects/index.js';
 export class Game {
     constructor(ballRadius) {
         this.bonus = true;
+        this.score = 0;
         this.device = new Device(this);
         this.fieldSize = this.defineFieldSize(this.device.getScreenSize());
         this.view = new View(this, this.fieldSize);
@@ -10,6 +11,7 @@ export class Game {
         this.star = new Star(ballRadius);
         this.finish = new Finish(ballRadius);
         this.traps = new Traps(ballRadius);
+        this.clock = new Clock();
         this.state = new State();
         this.level = 0;
         this.device.setupDeviceHandlers();
@@ -52,6 +54,8 @@ export class Game {
         this.star.generate(this.fieldSize);
         this.traps.generateTraps(this.level, this.finish, this.ball, this.star, this.fieldSize);
         this.state.start();
+        this.clock.start();
+        this.view.updateGamePanel(this.score, this.level, this.clock.getValueString());
         this.render();
     }
     ;
@@ -61,6 +65,7 @@ export class Game {
      */
     resume() {
         this.state.start();
+        this.clock.resume();
     }
     ;
     /**
@@ -69,6 +74,7 @@ export class Game {
      */
     pause() {
         this.state.pause();
+        this.clock.pause();
     }
     ;
     /**
@@ -77,6 +83,7 @@ export class Game {
      */
     restart() {
         this.level = 0;
+        this.score = 0;
         this.nextLevel();
     }
     ;
@@ -257,6 +264,7 @@ export class Game {
         if (!this.state.isActive())
             return;
         const objectsToRender = this.getGameObjects();
+        this.view.updateTimeInfo(this.clock.getValueString());
         this.view.render(objectsToRender);
     }
     ;

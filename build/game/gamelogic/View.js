@@ -30,6 +30,17 @@ export class View {
         this.startGameBtn = this.createHTMLElement("button", "start-game");
         this.addHTMLElement(this.body, this.startGameBtn);
         this.addEventListener(this.startGameBtn, "click", this.onPressStartGameBtn.bind(this));
+        this.gamePanel = this.createHTMLElement("div", "game-panel");
+        this.timeInfo = this.createHTMLElement("div", "time-info");
+        this.scoreInfo = this.createHTMLElement("div", "score-info");
+        this.levelInfo = this.createHTMLElement("div", "level-info");
+        this.pauseButton = this.createHTMLElement("div", "pause-button");
+        this.addEventListener(this.pauseButton, "click", this.onClickPause.bind(this));
+        this.addHTMLElement(this.gamePanel, this.scoreInfo);
+        this.addHTMLElement(this.gamePanel, this.timeInfo);
+        this.addHTMLElement(this.gamePanel, this.levelInfo);
+        this.addHTMLElement(this.gamePanel, this.pauseButton);
+        this.addHTMLElement(this.body, this.gamePanel);
     }
     ;
     /**
@@ -47,6 +58,16 @@ export class View {
      */
     updateFieldSize() {
         this.fieldSize = this.game.getFieldSize();
+    }
+    ;
+    updateGamePanel(score, level, time) {
+        this.scoreInfo.innerText = score.toString();
+        this.levelInfo.innerText = level.toString();
+        this.timeInfo.innerText = time;
+    }
+    ;
+    updateTimeInfo(time) {
+        this.timeInfo.innerText = time;
     }
     ;
     /**
@@ -119,6 +140,10 @@ export class View {
         this.game.resume();
     }
     ;
+    onClickPause() {
+        this.onPause();
+        this.game.pause();
+    }
     /**
      * Funkcja oblsuguje event nacisniecia komunikata z przegranej
      * @returns {void}

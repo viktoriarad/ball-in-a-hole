@@ -1,8 +1,11 @@
+import { Config } from "../config.js";
 export class View {
     constructor(_game, _fieldSize) {
         this.game = _game;
         this.fieldSize = _fieldSize;
         this.body = document.body;
+        this.images = new Map();
+        this.stubImg = this.createHTMLElement("div");
         this.canvas = this.createHTMLElement("canvas");
         this.canvas.width = this.fieldSize.width;
         this.canvas.height = this.fieldSize.height;
@@ -60,6 +63,19 @@ export class View {
         this.addHTMLElement(this.gamePanel, this.levelInfo);
         this.addHTMLElement(this.gamePanel, this.pauseButton);
         this.addHTMLElement(this.body, this.gamePanel);
+        this.initImages();
+    }
+    ;
+    /**
+     * Funkcja tworzy canvas
+     * @returns {void}
+     */
+    initImages() {
+        for (let i = 0; i < Config.images.length; i++) {
+            const image = this.createHTMLElement("img");
+            image.src = Config.images[i].src;
+            this.images.set(Config.images[i].name, image);
+        }
     }
     ;
     /**
@@ -256,11 +272,13 @@ export class View {
         this.ctx.fillStyle = "#00135d";
         this.ctx.fillRect(0, 0, this.fieldSize.width, this.fieldSize.height);
         traps.forEach((trap) => {
-            this.ctx.beginPath();
-            this.ctx.arc(trap.x, trap.y, trap.radius, 0, Math.PI * 2);
-            this.ctx.fillStyle = "#c90c0b";
-            this.ctx.fill();
-            this.ctx.closePath();
+            const image = this.images.get("bomb") || this.stubImg;
+            this.ctx.drawImage(image, trap.x, trap.y);
+            // this.ctx.beginPath();
+            // this.ctx.arc(trap.x, trap.y, trap.radius, 0, Math.PI * 2);
+            // this.ctx.fillStyle = "#c90c0b";
+            // this.ctx.fill();
+            // this.ctx.closePath();
         });
         if (star.visible) {
             this.ctx.beginPath();

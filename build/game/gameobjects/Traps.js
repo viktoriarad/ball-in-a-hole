@@ -25,8 +25,11 @@ export class Traps {
         const trapsAmount = 5 + level * 2;
         const radius = this.ballRadius + level;
         this.clearTraps();
-        for (let i = 0; i <= trapsAmount; i++) {
-            this.traps.push(this.generateTrap(radius, finishHole, ball, star, fieldSize));
+        while (this.traps.length <= trapsAmount) {
+            const generatedTrap = this.generateTrap(radius, finishHole, ball, star, fieldSize);
+            if (generatedTrap.radius !== 0) {
+                this.traps.push(generatedTrap);
+            }
         }
     }
     ;
@@ -49,7 +52,7 @@ export class Traps {
         const starCrossing = (Math.abs(star.x - x) - star.radius - radius <= 0 &&
             Math.abs(star.y - y) - star.radius - radius <= 0);
         if (trapCrossing || ballCrossing || finishCrossing || starCrossing) {
-            return this.generateTrap(radius, finishHole, ball, star, fieldSize);
+            return new Hole(0, 0, 0);
         }
         else {
             return new Hole(radius, x, y);

@@ -130,7 +130,7 @@ export class Game implements IGame {
 
   public setFullScreen(): void {
     this.device.setFullScreen();
-  }
+  };
 
   public getFieldSize(): ISize {
     return this.fieldSize;

@@ -6,7 +6,7 @@ export class Finish extends Circle implements IFinish {
 
   constructor(ballRadius: number) {
     super(ballRadius * 1.5);
-  }
+  };
 
   /**
    * Funkcja generuje i przypisuje nowa pozycje dla dziury finiszowej na planszy gry.
@@ -15,7 +15,7 @@ export class Finish extends Circle implements IFinish {
   public generateNewPosition(fieldSize: ISize): void {
     this._x = Math.floor(Math.random() * (fieldSize.width * 0.2) + this._radius);
     this._y = Math.floor(Math.random() * (fieldSize.height - this._radius * 2) + this._radius);
-  }
+  };
 
   /**
    * Funkcja sprawdza czy pilka trafila do dziury finiszowej.
@@ -26,6 +26,6 @@ export class Finish extends Circle implements IFinish {
     const y: boolean = (Math.abs(this._y - ball.y) - this._radius) <= 0;
 
     return x && y;
-  }
+  };
 
 }

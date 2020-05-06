@@ -1,5 +1,5 @@
 import { ITraps, ICircle } from "../interfaces/gameobjects.js";
-import { ISize } from "../interfaces/gametypes.js";
+import { Size } from "../interfaces/gametypes.js";
 import { Hole } from "./Hole.js";
 
 export class Traps implements ITraps {
@@ -27,7 +27,7 @@ export class Traps implements ITraps {
    * Funkcja generuje wszystkie czerwone pulapki
    * @returns {void}
    */
-  public generateTraps(level: number, finishHole: ICircle, ball: ICircle, star: ICircle, fieldSize: ISize): void {
+  public generateTraps(level: number, finishHole: ICircle, ball: ICircle, star: ICircle, fieldSize: Size): void {
     const trapsAmount: number = 5 + level * 2;
     const radius: number = this.ballRadius + level;
 
@@ -46,7 +46,7 @@ export class Traps implements ITraps {
    * Funkcja generuje pulapke i sprawdza aby sie nie znajdowala zablisko obok innych elementow gry
    * @returns {void}
    */
-  private generateTrap(radius: number, finishHole: ICircle, ball: ICircle, star: ICircle, fieldSize: ISize): ICircle {
+  private generateTrap(radius: number, finishHole: ICircle, ball: ICircle, star: ICircle, fieldSize: Size): ICircle {
     const x: number = Math.floor(Math.random() * (fieldSize.width - radius * 2) + radius);
     const y: number = Math.floor(Math.random() * (fieldSize.height - radius * 2) + radius);
 
@@ -80,14 +80,14 @@ export class Traps implements ITraps {
 
   /**
    * Funkcja zwraca tablice ze wszystkimi pulapkami na planszy gry.
-   * @returns {Array<ICircle>}
+   * @returns {Array}
    */
   public getAll(): Array<ICircle> {
     return this.traps;
   };
 
   /**
-   * Funkcja zmniijsza ilosc pulapek o podana wartosc razy.
+   * Funkcja zmniejsza ilosc pulapek o podana wartosc razy.
    * @returns {void}
    */
   public decreaseTraps(rate: number): void {

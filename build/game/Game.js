@@ -90,7 +90,7 @@ export class Game {
     /**
      * Funkcja zwraca rozmiar planszy gry. Nie zaleznie od urzadzenia zawsze przypisyjemy wieksza wartosc do szerokosci
      * i mniejsza do wysykosci.
-     * @returns {ISize}
+     * @returns {Size}
      */
     defineFieldSize(screenSize) {
         return {
@@ -99,17 +99,30 @@ export class Game {
         };
     }
     ;
+    /**
+     * Funkcja sprawdza rozmiar okna przegladarki i odswieza wartosc zmiennej fieldSize.
+     */
     onResize(screenSize) {
         this.fieldSize = this.defineFieldSize(screenSize);
     }
     ;
+    /**
+     * Funkcja wyswietla komunikat z prosba aby uzytkownik przeszedl w tryb FullScreen.
+     */
     requestFullScreen() {
         this.view.showFullScreenMsg();
     }
     ;
+    /**
+     * Funkcja ustawia tryb FullScreen.
+     */
     setFullScreen() {
         this.device.setFullScreen();
     }
+    ;
+    /**
+     * Funkcja zwraca rozmiar planszy gry.
+     */
     getFieldSize() {
         return this.fieldSize;
     }
@@ -131,13 +144,16 @@ export class Game {
         this.addScore();
     }
     ;
+    /**
+     * Funkcja dodaje wyniki.
+     */
     addScore() {
-        let currentScore = this.level * 10;
-        const timeMax = Math.round(5 * this.level * 0.4);
+        let roundScore = this.level * 10;
+        const timeMax = Math.round(5 + this.level * 0.4);
         if (this.clock.getValueInSecs() <= timeMax) {
-            currentScore *= 1.5;
+            roundScore *= 1.5;
         }
-        this.score += currentScore;
+        this.score += roundScore;
     }
     ;
     /**
@@ -187,7 +203,7 @@ export class Game {
     }
     ;
     /**
-     * Funkcja odswieza widok gry podczas inicjalizacji w zaleznosci od orientacji
+     * Funkcja odswieza widok gry podczas inicjalizacji w zaleznosci od orientacji. Widok ukrywa i wyswietla odpowiednie komunikaty.
      * @returns {void}
      */
     updateOrientationViewOnInit() {
@@ -239,11 +255,15 @@ export class Game {
         }
     }
     ;
+    /**
+     * Funkcja daje uzytkownikowi bonus w postaci zmniejszenia ilosci pulapek o dwa razy.
+     */
     getBonus() {
         this.traps.decreaseTraps(2);
     }
+    ;
     /**
-     * Funkcja sprawdza czy pilka nie trafila do czerwonej pulapki
+     * Funkcja sprawdza czy pilka trafila do czerwonej pulapki
      * @returns {boolean} True or false
      */
     gotInTrap() {
@@ -251,7 +271,7 @@ export class Game {
     }
     ;
     /**
-     * Funkcja sprawdza czy pilka nie trafila do zielonej dziury (finiszu)
+     * Funkcja sprawdza czy pilka trafila do zielonej dziury (finiszu)
      * @returns {boolean} True or false
      */
     gotFinish() {
@@ -259,7 +279,7 @@ export class Game {
     }
     ;
     /**
-     * Funkcja sprawdza czy pilka nie trafila do zielonej dziury (finiszu)
+     * Funkcja sprawdza czy pilka trafila na gwiazdke
      * @returns {boolean} True or false
      */
     gotStar() {

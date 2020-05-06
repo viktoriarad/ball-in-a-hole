@@ -18,6 +18,7 @@ export class Device {
     }
     ;
     /**
+     * Funkcja ustawia nasluchiwania na zdarzenia ktore wywoluje urzadzenie i sprawdza czy tryb FullScreen jesy dostepny.
      * @returns {void}
      */
     setupDeviceHandlers() {
@@ -73,7 +74,7 @@ export class Device {
     ;
     /**
      * Funkcja zwraca rozmiar ekranu urzadzenia w pixeliach.
-     * @returns {ISize} Obiekt z wysokoscia i szerokoscia.
+     * @returns {Size} Obiekt z wysokoscia i szerokoscia.
      */
     getScreenSize() {
         return this.screenSize;
@@ -88,7 +89,7 @@ export class Device {
     }
     ;
     /**
-     * Funkcja dodaje nasłuchiwanie na zmianę polozenia urzadzenia.
+     * Funkcja dodaje nasłuchiwanie na zmianę polozenia urzadzenia (gyroscope).
      * @returns {void}
      */
     setDeviceOrientationEventHandler() {
@@ -133,6 +134,9 @@ export class Device {
         this.game.onOrientationChange();
     }
     ;
+    /**
+     * Funkcja sprawdza czy tryb FullScreen jest dostepny na urzadzeniu.
+     */
     checkFullScreenAPI() {
         const fullScreenEnabled = document.fullscreenEnabled || document.webkitFullscreenEnabled;
         const isInFullScreen = document.fullscreenElement || document.webkitFullscreenElement ? true : false;
@@ -140,6 +144,9 @@ export class Device {
             this.game.requestFullScreen();
         }
     }
+    /**
+     * Funkcja probuje wlaczyc tryb FullScreen.
+     */
     setFullScreen() {
         if (document.body.requestFullscreen) {
             document.body.requestFullscreen();
@@ -150,7 +157,7 @@ export class Device {
     }
     /**
      * Funkcja definiuje rozmiar ekranu urzadzenia w pixeliach
-     * @returns {ISize} Obiekt z wysokoscia i szerokoscia.
+     * @returns {Size} Obiekt z wysokoscia i szerokoscia.
      */
     defineScreenSize() {
         const screenSize = { width: 0, height: 0 };
@@ -167,7 +174,7 @@ export class Device {
     ;
     /**
      * Funkcja zwraca wlasciwosci dotyczace orientacji urzadzenia
-     * @returns {IOrientation} Zwraca obiekt z trzema wlasciwosciami.
+     * @returns {Orientation} Zwraca obiekt z trzema wlasciwosciami.
      */
     getOrientation() {
         const defaultOrientation = this.screenSize.width > this.screenSize.height ? 'landscape' : 'portrait';

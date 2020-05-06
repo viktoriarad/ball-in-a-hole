@@ -1,12 +1,12 @@
 import { IView, IGame, IBall, ICircle, IStar, IGameObjects } from "../interfaces/gameobjects.js";
-import { ISize } from "../interfaces/gametypes.js";
+import { Size } from "../interfaces/gametypes.js";
 
 export class View implements IView {
   private readonly game: IGame;
   private readonly canvas: HTMLCanvasElement;
   private readonly ctx: CanvasRenderingContext2D;
   private readonly body: HTMLBodyElement;
-  private fieldSize: ISize;
+  private fieldSize: Size;
   private readonly fullScreenMsg: HTMLElement;
   private readonly rotateMsg: HTMLElement;
   private readonly pauseMsg: HTMLElement;
@@ -19,7 +19,7 @@ export class View implements IView {
   private readonly pauseButton: HTMLElement;
   private readonly startGameBtn: HTMLElement;
 
-  constructor(_game: IGame, _fieldSize: ISize) {
+  constructor(_game: IGame, _fieldSize: Size) {
     this.game = _game;
     this.fieldSize = _fieldSize;
     this.body = <HTMLBodyElement>document.body;
@@ -99,7 +99,7 @@ export class View implements IView {
   };
 
   /**
-   * Funkcja tworzy canvas
+   * Funkcja aktualizuje rozmiar canvasu.
    * @returns {void}
    */
   private updateCanvasSize(): void {
@@ -108,19 +108,25 @@ export class View implements IView {
   };
 
   /**
-   * Funkcja tworzy canvas
+   * Funkcja aktualizuje wartosc zmiennej ktora przechowuje rozmiar planszy gry.
    * @returns {void}
    */
   private updateFieldSize(): void {
     this.fieldSize = this.game.getFieldSize();
   };
 
+  /**
+   * Funkcja aktualizuje widok gornej paneli z informacja.
+   */
   public updateGamePanel(score: number, level: number, time: string): void {
     this.scoreInfo.innerText = "Score: " + score.toString();
     this.levelInfo.innerText = "Level: " + level.toString();
     this.timeInfo.innerText = time;
   };
 
+  /**
+   * Funkcja aktualizuje czas w gornej paneli.
+   */
   public updateTimeInfo(time: string): void {
     this.timeInfo.innerText = time;
   };

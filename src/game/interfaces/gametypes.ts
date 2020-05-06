@@ -1,20 +1,20 @@
-export interface IPosition {
+export type Position = {
   x: number;
   y: number;
 }
 
-export interface ITime {
+export type Time = {
   hours: number;
   minutes: number;
   seconds: number;
 }
 
-export interface ISize {
+export type Size = {
   width: number;
   height: number;
 }
 
-export interface IOrientation {
+export type Orientation = {
   default: string;
   current: string;
   reversed: boolean;

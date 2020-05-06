@@ -1,12 +1,12 @@
 import { IBall, IFinish, IStar, IView, IDevice, ITraps, IState, IGame, IGameObjects, IClock } from "./interfaces/gameobjects.js";
-import { ISize, IOrientation, IPosition } from "./interfaces/gametypes.js";
+import { Size, Orientation, Position } from "./interfaces/gametypes.js";
 import { Device, View, State } from './gamelogic/index.js';
 import { Ball, Finish, Traps, Star, Clock } from './gameobjects/index.js';
 
 export class Game implements IGame {
 
   private readonly device: IDevice;
-  private fieldSize: ISize;
+  private fieldSize: Size;
   private readonly view: IView;
   private readonly ball: IBall;
   private readonly finish: IFinish;
@@ -111,28 +111,40 @@ export class Game implements IGame {
   /**
    * Funkcja zwraca rozmiar planszy gry. Nie zaleznie od urzadzenia zawsze przypisyjemy wieksza wartosc do szerokosci
    * i mniejsza do wysykosci.
-   * @returns {ISize}
+   * @returns {Size}
    */
-  private defineFieldSize(screenSize: ISize): ISize {
+  private defineFieldSize(screenSize: Size): Size {
     return {
       width: screenSize.width > screenSize.height ? screenSize.width : screenSize.height,
       height: screenSize.width > screenSize.height ? screenSize.height : screenSize.width
     };
   };
 
-  public onResize(screenSize: ISize): void {
+  /**
+   * Funkcja sprawdza rozmiar okna przegladarki i odswieza wartosc zmiennej fieldSize.
+   */
+  public onResize(screenSize: Size): void {
     this.fieldSize = this.defineFieldSize(screenSize);
   };
 
+  /**
+   * Funkcja wyswietla komunikat z prosba aby uzytkownik przeszedl w tryb FullScreen.
+   */
   public requestFullScreen(): void {
     this.view.showFullScreenMsg();
   };
 
+  /**
+   * Funkcja ustawia tryb FullScreen.
+   */
   public setFullScreen(): void {
     this.device.setFullScreen();
   };
 
-  public getFieldSize(): ISize {
+  /**
+   * Funkcja zwraca rozmiar planszy gry.
+   */
+  public getFieldSize(): Size {
     return this.fieldSize;
   };
 
@@ -153,14 +165,18 @@ export class Game implements IGame {
     this.addScore();
   };
 
+  /**
+   * Funkcja dodaje wyniki.
+   */
   private addScore(): void {
-    let currentScore: number = this.level * 10;
-    const timeMax: number = Math.round(5 * this.level * 0.4);
+    let roundScore: number = this.level * 10;
+    const timeMax: number = Math.round(5 + this.level * 0.4);
+
     if (this.clock.getValueInSecs() <= timeMax) {
-      currentScore *= 1.5;
+      roundScore *= 1.5;
     }
 
-    this.score += currentScore;
+    this.score += roundScore;
   };
 
   /**
@@ -180,7 +196,7 @@ export class Game implements IGame {
    * Funkcja obsluguje zdarzenia zmiany polozenia urzadzenia.
    * @returns {void}
    */
-  public accelerate(coords: IPosition): void {
+  public accelerate(coords: Position): void {
     if (!this.state.isActive()) return;
 
     this.moveBallBy(coords);
@@ -211,7 +227,7 @@ export class Game implements IGame {
   };
 
   /**
-   * Funkcja odswieza widok gry podczas inicjalizacji w zaleznosci od orientacji
+   * Funkcja odswieza widok gry podczas inicjalizacji w zaleznosci od orientacji. Widok ukrywa i wyswietla odpowiednie komunikaty.
    * @returns {void}
    */
   private updateOrientationViewOnInit(): void {
@@ -240,8 +256,8 @@ export class Game implements IGame {
    * Funkcja przesuwa pilke na odpowiednia ilosc pixeli.
    * @returns {void}
    */
-  private moveBallBy(coords: IPosition): void {
-    const orientation: IOrientation = this.device.getOrientation();
+  private moveBallBy(coords: Position): void {
+    const orientation: Orientation = this.device.getOrientation();
     const multiplier: number = orientation.reversed ? 1 : -1;
 
     this.ball.moveBy({
@@ -260,12 +276,15 @@ export class Game implements IGame {
     }
   };
 
+  /**
+   * Funkcja daje uzytkownikowi bonus w postaci zmniejszenia ilosci pulapek o dwa razy.
+   */
   private getBonus(): void {
     this.traps.decreaseTraps(2);
-  }
+  };
 
   /**
-   * Funkcja sprawdza czy pilka nie trafila do czerwonej pulapki
+   * Funkcja sprawdza czy pilka trafila do czerwonej pulapki
    * @returns {boolean} True or false
    */
   private gotInTrap(): boolean {
@@ -273,7 +292,7 @@ export class Game implements IGame {
   };
 
   /**
-   * Funkcja sprawdza czy pilka nie trafila do zielonej dziury (finiszu)
+   * Funkcja sprawdza czy pilka trafila do zielonej dziury (finiszu)
    * @returns {boolean} True or false
    */
   private gotFinish(): boolean {
@@ -281,7 +300,7 @@ export class Game implements IGame {
   };
 
   /**
-   * Funkcja sprawdza czy pilka nie trafila do zielonej dziury (finiszu)
+   * Funkcja sprawdza czy pilka trafila na gwiazdke
    * @returns {boolean} True or false
    */
   private gotStar(): boolean {

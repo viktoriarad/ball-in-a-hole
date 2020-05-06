@@ -1,12 +1,12 @@
 import { IDevice, IGame } from "../interfaces/gameobjects.js";
-import { IOrientation, ISize, IPosition } from "../interfaces/gametypes.js";
+import { Orientation, Size } from "../interfaces/gametypes.js";
 
 export class Device  implements IDevice {
   private motionPermission: boolean = false;
   public readonly isiOS: boolean;
   public readonly iPhoneWithHomeIndicator: boolean;
   public readonly isAndroid: boolean;
-  private screenSize: ISize;
+  private screenSize: Size;
   private readonly game: IGame;
 
   constructor(_game: IGame) {
@@ -27,6 +27,7 @@ export class Device  implements IDevice {
   };
 
   /**
+   * Funkcja ustawia nasluchiwania na zdarzenia ktore wywoluje urzadzenie i sprawdza czy tryb FullScreen jesy dostepny.
    * @returns {void}
    */
   public setupDeviceHandlers(): void {
@@ -40,11 +41,11 @@ export class Device  implements IDevice {
    */
   public isiPhoneWithHomeIndicator(): boolean {
     const ratio = window.devicePixelRatio || 1;
-    const screen: ISize = {
+    const screen: Size = {
       width: window.screen.height * ratio,
       height: window.screen.height * ratio,
     };
-    const hasDimensions = (size: ISize) => {
+    const hasDimensions = (size: Size) => {
       return (screen.width === size.width && screen.height === screen.height) ||
         (screen.width === size.height && screen.height === screen.width);
     };
@@ -86,9 +87,9 @@ export class Device  implements IDevice {
 
   /**
    * Funkcja zwraca rozmiar ekranu urzadzenia w pixeliach.
-   * @returns {ISize} Obiekt z wysokoscia i szerokoscia.
+   * @returns {Size} Obiekt z wysokoscia i szerokoscia.
    */
-  public getScreenSize(): ISize {
+  public getScreenSize(): Size {
     return this.screenSize;
   };
 
@@ -101,7 +102,7 @@ export class Device  implements IDevice {
   };
 
   /**
-   * Funkcja dodaje nasłuchiwanie na zmianę polozenia urzadzenia.
+   * Funkcja dodaje nasłuchiwanie na zmianę polozenia urzadzenia (gyroscope).
    * @returns {void}
    */
   public setDeviceOrientationEventHandler(): void {
@@ -147,6 +148,9 @@ export class Device  implements IDevice {
     this.game.onOrientationChange();
   };
 
+  /**
+   * Funkcja sprawdza czy tryb FullScreen jest dostepny na urzadzeniu.
+   */
   private checkFullScreenAPI(): void {
     const fullScreenEnabled: boolean = document.fullscreenEnabled || document.webkitFullscreenEnabled;
     const isInFullScreen: boolean = document.fullscreenElement || document.webkitFullscreenElement ? true : false;
@@ -156,6 +160,9 @@ export class Device  implements IDevice {
     }
   }
 
+  /**
+   * Funkcja probuje wlaczyc tryb FullScreen.
+   */
   public setFullScreen(): void {
     if (document.body.requestFullscreen) {
       document.body.requestFullscreen();
@@ -166,10 +173,10 @@ export class Device  implements IDevice {
 
   /**
    * Funkcja definiuje rozmiar ekranu urzadzenia w pixeliach
-   * @returns {ISize} Obiekt z wysokoscia i szerokoscia.
+   * @returns {Size} Obiekt z wysokoscia i szerokoscia.
    */
-  public defineScreenSize(): ISize {
-    const screenSize: ISize = { width: 0, height: 0 };
+  public defineScreenSize(): Size {
+    const screenSize: Size = { width: 0, height: 0 };
 
     if (this.isiOS) {
       screenSize.width = window.screen.width;
@@ -184,11 +191,11 @@ export class Device  implements IDevice {
 
   /**
    * Funkcja zwraca wlasciwosci dotyczace orientacji urzadzenia
-   * @returns {IOrientation} Zwraca obiekt z trzema wlasciwosciami.
+   * @returns {Orientation} Zwraca obiekt z trzema wlasciwosciami.
    */
-  getOrientation(): IOrientation {
+  getOrientation(): Orientation {
     const defaultOrientation = this.screenSize.width > this.screenSize.height ? 'landscape' : 'portrait';
-    const orientation: IOrientation = {default: defaultOrientation, current: defaultOrientation, reversed: false};
+    const orientation: Orientation = {default: defaultOrientation, current: defaultOrientation, reversed: false};
 
     switch (window.orientation) {
       case 0:

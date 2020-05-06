@@ -1,4 +1,4 @@
-import { IOrientation, IPosition, ISize } from "./gametypes";
+import { Orientation, Position, Size } from "./gametypes";
 
 export interface ICircle {
   x: number;
@@ -15,13 +15,13 @@ export interface IClock {
 }
 
 export interface IBall extends ICircle {
-  moveBy(position: IPosition): void;
-  generateNewPosition(fieldSize: ISize): void;
+  moveBy(position: Position): void;
+  generateNewPosition(fieldSize: Size): void;
 }
 
 export interface IFinish extends ICircle {
   checkIfBallGotInside(ball: ICircle): boolean;
-  generateNewPosition(fieldSize: ISize): void;
+  generateNewPosition(fieldSize: Size): void;
 }
 
 export interface IGame {
@@ -30,11 +30,11 @@ export interface IGame {
   nextLevel(): void;
   pause(): void;
   restart(): void;
-  accelerate(coords: IPosition): void;
+  accelerate(coords: Position): void;
   onOrientationChange(): void;
   onPressStartBtn(): void;
-  getFieldSize(): ISize;
-  onResize(screenSize: ISize): void;
+  getFieldSize(): Size;
+  onResize(screenSize: Size): void;
   setFullScreen(): void;
   requestFullScreen(): void;
 }
@@ -60,8 +60,8 @@ export interface IDevice {
   isAndroid: boolean;
   isPortrait: boolean;
   isLandscape: boolean;
-  getScreenSize(): ISize;
-  getOrientation(): IOrientation;
+  getScreenSize(): Size;
+  getOrientation(): Orientation;
   requestSensorsPermission(): void;
   setDeviceOrientationEventHandler(): void;
   setFullScreen(): void;
@@ -81,7 +81,7 @@ export interface IState {
 }
 
 export interface ITraps {
-  generateTraps(level: number, finishHole: ICircle, ball: ICircle, star: ICircle, fieldSize: ISize): void;
+  generateTraps(level: number, finishHole: ICircle, ball: ICircle, star: ICircle, fieldSize: Size): void;
   checkIfBallGotInside(ball: ICircle): boolean;
   getAll(): Array<ICircle>;
   decreaseTraps(rate: number): void;
@@ -95,9 +95,9 @@ export interface IGameObjects {
 }
 
 export interface IStar extends ICircle {
-  drawPoints: Array<IPosition>;
+  drawPoints: Array<Position>;
   visible: boolean;
   checkIfBallGotInside(ball: ICircle): boolean;
-  generate(fieldSize: ISize): void;
+  generate(fieldSize: Size): void;
   hide(): void;
 }

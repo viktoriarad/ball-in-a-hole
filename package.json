@@ -2,9 +2,9 @@
   "name": "ball-in-a-hole",
   "version": "0.0.1",
   "description": "Browser mobile game with using of gyroscope API",
-  "main": "app.js",
+  "main": "src/app.js",
   "scripts": {
-    "build-ts": "tsc"
+    "build-ts": "tsc --build tsconfig.json"
   },
   "repository": {
     "type": "git",

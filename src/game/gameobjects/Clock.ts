@@ -1,8 +1,8 @@
-import { ITime } from '../interfaces/gametypes.js';
+import { Time } from '../interfaces/gametypes.js';
 import { IClock } from '../interfaces/gameobjects.js';
 
 export class Clock implements IClock {
-  private value: ITime;
+  private value: Time;
   private intervalId: number = -1;
 
   constructor() {
@@ -60,7 +60,7 @@ export class Clock implements IClock {
   /**
    * Funkcja zwraca aktualny czas w formacie { hours: number, minutes: number, seconds: number }.
    */
-  public getValue(): ITime {
+  public getValue(): Time {
     return this.value;
   };
 

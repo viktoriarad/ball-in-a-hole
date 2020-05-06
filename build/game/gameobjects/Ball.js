@@ -3,6 +3,7 @@ export class Ball extends Circle {
     constructor(ballRadius) {
         super(ballRadius);
     }
+    ;
     /**
      * Funkcja generuje i przypisuje nowa pozycje dla pilki na planszy gry.
      * @returns {void}

@@ -1,10 +1,10 @@
 import { ICircle, IStar } from '../interfaces/gameobjects.js';
 import { Circle } from './Circle.js';
-import { ISize, IPosition } from "../interfaces/gametypes.js";
+import { Size, Position } from "../interfaces/gametypes.js";
 
 export class Star extends Circle implements IStar {
 
-  public drawPoints: Array<IPosition> = [];
+  public drawPoints: Array<Position> = [];
   public visible: boolean = true;
 
   constructor(ballRadius: number) {
@@ -15,7 +15,7 @@ export class Star extends Circle implements IStar {
    * Funkcja generuje i przypisuje nowa pozycje dla gwiazdki na planszy gry.
    * @returns {void}
    */
-  public generate(fieldSize: ISize): void {
+  public generate(fieldSize: Size): void {
     this.visible = true;
 
     this.generateNewPosition(fieldSize);
@@ -23,10 +23,10 @@ export class Star extends Circle implements IStar {
   };
 
   /**
-   * Funkcja generuje i przypisuje nowa pozycje dla gwiazdki na planszy gry.
+   * Funkcja przypisuje nowa pozycje dla gwiazdki na planszy gry.
    * @returns {void}
    */
-  private generateNewPosition(fieldSize: ISize): void {
+  private generateNewPosition(fieldSize: Size): void {
     this.visible = true;
 
     this._x = Math.floor((fieldSize.width * 0.4) + Math.random() * (fieldSize.width * 0.2) + this._radius);
@@ -35,6 +35,9 @@ export class Star extends Circle implements IStar {
     this.generateDrawPoints();
   };
 
+  /**
+   * Funkcja generuje punkty rysowania gwiazdki.
+   */
   private generateDrawPoints(): void {
     let rot: number = Math.PI / 2 * 3;
     const step: number = Math.PI / 5;
@@ -68,8 +71,8 @@ export class Star extends Circle implements IStar {
   };
 
   /**
-   * Funkcja sprawdza czy pilka trafila do gwiazdki.
-   * @returns {boolean} True jesli trafila lub false jesli nie.
+   * Funkcja zmienia wartosc visible na false aby ukryc gwiazdke.
+   * @returns {void}
    */
   public hide(): void {
     this.visible = false;

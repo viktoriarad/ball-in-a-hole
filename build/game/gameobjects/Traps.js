@@ -61,14 +61,14 @@ export class Traps {
     ;
     /**
      * Funkcja zwraca tablice ze wszystkimi pulapkami na planszy gry.
-     * @returns {Array<ICircle>}
+     * @returns {Array}
      */
     getAll() {
         return this.traps;
     }
     ;
     /**
-     * Funkcja zmniijsza ilosc pulapek o podana wartosc razy.
+     * Funkcja zmniejsza ilosc pulapek o podana wartosc razy.
      * @returns {void}
      */
     decreaseTraps(rate) {

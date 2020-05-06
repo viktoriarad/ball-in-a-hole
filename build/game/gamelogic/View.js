@@ -63,7 +63,7 @@ export class View {
     }
     ;
     /**
-     * Funkcja tworzy canvas
+     * Funkcja aktualizuje rozmiar canvasu.
      * @returns {void}
      */
     updateCanvasSize() {
@@ -72,19 +72,25 @@ export class View {
     }
     ;
     /**
-     * Funkcja tworzy canvas
+     * Funkcja aktualizuje wartosc zmiennej ktora przechowuje rozmiar planszy gry.
      * @returns {void}
      */
     updateFieldSize() {
         this.fieldSize = this.game.getFieldSize();
     }
     ;
+    /**
+     * Funkcja aktualizuje widok gornej paneli z informacja.
+     */
     updateGamePanel(score, level, time) {
         this.scoreInfo.innerText = "Score: " + score.toString();
         this.levelInfo.innerText = "Level: " + level.toString();
         this.timeInfo.innerText = time;
     }
     ;
+    /**
+     * Funkcja aktualizuje czas w gornej paneli.
+     */
     updateTimeInfo(time) {
         this.timeInfo.innerText = time;
     }

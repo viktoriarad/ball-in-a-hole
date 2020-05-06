@@ -17,7 +17,7 @@ export class Star extends Circle {
     }
     ;
     /**
-     * Funkcja generuje i przypisuje nowa pozycje dla gwiazdki na planszy gry.
+     * Funkcja przypisuje nowa pozycje dla gwiazdki na planszy gry.
      * @returns {void}
      */
     generateNewPosition(fieldSize) {
@@ -27,6 +27,9 @@ export class Star extends Circle {
         this.generateDrawPoints();
     }
     ;
+    /**
+     * Funkcja generuje punkty rysowania gwiazdki.
+     */
     generateDrawPoints() {
         let rot = Math.PI / 2 * 3;
         const step = Math.PI / 5;
@@ -55,8 +58,8 @@ export class Star extends Circle {
     }
     ;
     /**
-     * Funkcja sprawdza czy pilka trafila do gwiazdki.
-     * @returns {boolean} True jesli trafila lub false jesli nie.
+     * Funkcja zmienia wartosc visible na false aby ukryc gwiazdke.
+     * @returns {void}
      */
     hide() {
         this.visible = false;

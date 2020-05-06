@@ -6,7 +6,7 @@ export class Ball extends Circle implements IBall {
 
   constructor(ballRadius: number) {
     super(ballRadius);
-  }
+  };
 
   /**
    * Funkcja generuje i przypisuje nowa pozycje dla pilki na planszy gry.

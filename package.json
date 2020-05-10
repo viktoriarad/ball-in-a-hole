@@ -4,7 +4,11 @@
   "description": "Browser mobile game with using of gyroscope API",
   "main": "src/app.js",
   "scripts": {
-    "build-ts": "tsc --build tsconfig.json"
+    "build": "rimraf dist && npm run build-client && npm run build-server && npm run gulp",
+    "build-client": "tsc --build src/client/javascript/tsconfig.json",
+    "build-server": "tsc --build src/server/tsconfig.json",
+    "gulp": "gulp default",
+    "start-server": "node dist/server/index.js"
   },
   "repository": {
     "type": "git",
@@ -20,8 +24,20 @@
     "url": "https://github.com/viktoriarad/ball-in-a-hole/issues"
   },
   "homepage": "https://github.com/viktoriarad/ball-in-a-hole#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "faker": "^4.1.0",
+    "ws": "^7.2.5"
+  },
   "devDependencies": {
+    "@types/express": "^4.17.6",
+    "@types/ws": "^7.2.4",
+    "del": "^5.1.0",
+    "gulp": "^4.0.2",
+    "gulp-concat-css": "^3.1.0",
+    "gulp-css-purge": "^3.0.9",
     "prettier": "2.0.2",
+    "rimraf": "^3.0.2",
     "typescript": "^3.8.3"
   }
 }

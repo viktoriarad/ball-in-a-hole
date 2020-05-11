@@ -15,6 +15,10 @@ const paths = {
   images: {
     src: 'src/client/images/**/*',
     dest: 'dist/client/images/'
+  },
+  html: {
+    src:'src/client/**/*.html',
+    dest: 'dist/client/'
   }
 };
 
@@ -32,6 +36,11 @@ const images = () => {
     .pipe(gulp.dest(paths.images.dest));
 };
 
-const build = gulp.series(clean, gulp.parallel(styles, images));
+const html = () => {
+  return gulp.src(paths.html.src)
+    .pipe(gulp.dest(paths.html.dest));
+};
+
+const build = gulp.series(clean, gulp.parallel(styles, images, html));
 
 exports.default = build;

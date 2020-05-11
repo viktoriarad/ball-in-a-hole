@@ -1,5 +1,5 @@
 import { IView, IGame, IBall, ICircle, IStar, IGameObjects } from "../interfaces/gameobjects.js";
-import { Size } from "../interfaces/gametypes.js";
+import { Size, record } from "../interfaces/gametypes.js";
 
 export class View implements IView {
   private readonly game: IGame;
@@ -15,8 +15,10 @@ export class View implements IView {
   private readonly gamePanel: HTMLElement;
   private readonly timeInfo: HTMLElement;
   private readonly scoreInfo: HTMLElement;
+  private readonly bestScore: HTMLElement;
   private readonly levelInfo: HTMLElement;
   private readonly pauseButton: HTMLElement;
+  private readonly restartButton: HTMLElement;
   private readonly startGameBtn: HTMLElement;
 
   constructor(_game: IGame, _fieldSize: Size) {
@@ -86,14 +88,19 @@ export class View implements IView {
     this.gamePanel.classList.add("invisible");
     this.timeInfo = this.createHTMLElement("div", "time-info");
     this.scoreInfo = this.createHTMLElement("div", "score-info");
+    this.bestScore = this.createHTMLElement("div", "bestscore-info");
     this.levelInfo = this.createHTMLElement("div", "level-info");
     this.pauseButton = this.createHTMLElement("div", "pause-button");
     this.addEventListener(this.pauseButton, "click", this.onClickPause.bind(this));
+    this.restartButton = this.createHTMLElement("div", "restart-button");
+    this.addEventListener(this.pauseButton, "click", this.onClickRestart.bind(this));
 
     this.addHTMLElement(this.gamePanel, this.scoreInfo);
+    this.addHTMLElement(this.gamePanel, this.bestScore);
     this.addHTMLElement(this.gamePanel, this.timeInfo);
     this.addHTMLElement(this.gamePanel, this.levelInfo);
     this.addHTMLElement(this.gamePanel, this.pauseButton);
+    this.addHTMLElement(this.gamePanel, this.restartButton);
 
     this.addHTMLElement(this.body, this.gamePanel);
   };
@@ -129,6 +136,13 @@ export class View implements IView {
    */
   public updateTimeInfo(time: string): void {
     this.timeInfo.innerText = time;
+  };
+
+  /**
+   * Funkcja aktualizuje czas w gornej paneli.
+   */
+  public updateBestScoreInfo(bestScore: record): void {
+    this.bestScore.innerText = bestScore.username + ": " + bestScore.score;
   };
 
   /**
@@ -201,9 +215,21 @@ export class View implements IView {
     this.game.resume();
   };
 
+  /**
+   * Funkcja oblsuguje event klekniecia przycisku pauzy
+   * @returns {void}
+   */
   private onClickPause(): void {
     this.onPause();
     this.game.pause();
+  }
+
+  /**
+   * Funkcja oblsuguje event klekniecia przycisku restart
+   * @returns {void}
+   */
+  private onClickRestart(): void {
+    this.game.restart();
   }
 
   /**

@@ -19,3 +19,8 @@ export type Orientation = {
   current: string;
   reversed: boolean;
 }
+
+export type record = {
+  username: string;
+  score: number;
+}

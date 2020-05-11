@@ -10,7 +10,6 @@ export class Device {
             document.body.classList.add('android');
         }
         else if (this.isiOS) {
-            this.changeProtocol();
             document.body.classList.add('iOS');
             if (this.iPhoneWithHomeIndicator) {
                 document.body.classList.add('iPhoneWithHomeIndicator');
@@ -26,16 +25,6 @@ export class Device {
         this.setOrientationChangeEventHandler();
         this.setResizeEventHandler();
         this.checkFullScreenAPI();
-    }
-    ;
-    /**
-     * Funkcja zmienia protokol na szyfrowany.
-     * @returns {void}
-     */
-    changeProtocol() {
-        if (window.location.protocol !== 'https:') {
-            window.location.href = 'https:' + window.location.href.substring(window.location.protocol.length);
-        }
     }
     ;
     /** Funkcja definiuje czy urzadzenie posdiada home indicator jak iPhone X

@@ -8,8 +8,6 @@ export class Server {
   private game: Game;
 
   constructor(game: Game) {
-    this.changeProtocol();
-
     this.game = game;
     this.socket = new WebSocket(url);
     this.initListeners();
@@ -40,16 +38,6 @@ export class Server {
     console.log(parsedServerResponse);
 
     return parsedServerResponse;
-  };
-
-  /**
-   * Funkcja zmienia protokol na szyfrowany.
-   * @returns {void}
-   */
-  private changeProtocol(): void {
-    if (window.location.protocol !== 'https:') {
-      window.location.href = 'https:' + window.location.href.substring(window.location.protocol.length);
-    }
   };
 
 }

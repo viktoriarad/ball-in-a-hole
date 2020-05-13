@@ -1,4 +1,5 @@
-import { IDevice, IGame } from "../interfaces/gameobjects.js";
+import { IDevice } from "../interfaces/gameobjects.js";
+import { Game } from "../Game.js";
 import { Orientation, Size } from "../interfaces/gametypes.js";
 
 export class Device  implements IDevice {
@@ -7,10 +8,10 @@ export class Device  implements IDevice {
   public readonly iPhoneWithHomeIndicator: boolean;
   public readonly isAndroid: boolean;
   private screenSize: Size;
-  private readonly game: IGame;
+  private readonly game: Game;
 
-  constructor(_game: IGame) {
-    this.game = _game;
+  constructor(game: Game) {
+    this.game = game;
     this.isAndroid = /android/i.test(navigator.userAgent);
     this.isiOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
     this.iPhoneWithHomeIndicator = this.isiPhoneWithHomeIndicator();

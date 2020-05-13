@@ -1,7 +1,7 @@
 export class Device {
-    constructor(_game) {
+    constructor(game) {
         this.motionPermission = false;
-        this.game = _game;
+        this.game = game;
         this.isAndroid = /android/i.test(navigator.userAgent);
         this.isiOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
         this.iPhoneWithHomeIndicator = this.isiPhoneWithHomeIndicator();

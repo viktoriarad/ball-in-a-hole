@@ -1,5 +1,3 @@
-import { IState } from '../interfaces/gameobjects.js';
-
 /**
  * Typ wyliczeniowy States, przechowuje stany gry
  */
@@ -11,7 +9,7 @@ enum States {
   OVER
 };
 
-export class State implements IState {
+export class State {
   private state: States;
 
   constructor() {

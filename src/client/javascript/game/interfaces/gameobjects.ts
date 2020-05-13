@@ -1,4 +1,4 @@
-import { Orientation, Position, Size } from "./gametypes";
+import { Orientation, Position, record, Size } from "./gametypes.js";
 
 export interface ICircle {
   x: number;
@@ -37,7 +37,7 @@ export interface IGame {
   onResize(screenSize: Size): void;
   setFullScreen(): void;
   requestFullScreen(): void;
-  onServerMessage(data: string): void;
+  onServerMessage(data: record): void;
 }
 
 export interface IView {
@@ -53,6 +53,7 @@ export interface IView {
   showFullScreenMsg(): void;
   updateGamePanel(score: number, level: number, time: string): void;
   updateTimeInfo(time: string): void;
+  updateBestScoreInfo(bestScore: record): void;
 }
 
 export interface IDevice {
@@ -67,18 +68,6 @@ export interface IDevice {
   setDeviceOrientationEventHandler(): void;
   setFullScreen(): void;
   setupDeviceHandlers(): void;
-}
-
-export interface IState {
-  start(): void;
-  pause(): void;
-  over(): void;
-  win(): void;
-  isActive(): boolean;
-  isStarted(): boolean;
-  isPaused(): boolean;
-  isWin(): boolean;
-  isGameOver(): boolean;
 }
 
 export interface ITraps {

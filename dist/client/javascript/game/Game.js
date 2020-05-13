@@ -12,7 +12,7 @@ export class Game {
         this.star = new Star(ballRadius);
         this.finish = new Finish(ballRadius);
         this.traps = new Traps(ballRadius);
-        this.clock = new Clock();
+        this.clock = new Clock(this);
         this.state = new State();
         this.level = 0;
         this.device.setupDeviceHandlers();
@@ -295,12 +295,24 @@ export class Game {
         if (!this.state.isActive())
             return;
         const objectsToRender = this.getGameObjects();
-        this.view.updateTimeInfo(this.clock.getValueString());
         this.view.render(objectsToRender);
     }
     ;
+    /**
+     * Funkcja updejtuje najlepszy wynik losowego gracza.
+     * @returns {void}
+     */
     onServerMessage(data) {
-        console.log(data);
+        this.view.updateBestScoreInfo(data);
     }
+    ;
+    /**
+     * Funkcja updejtuje czas na zegarku co sekunde.
+     * @returns {void}
+     */
+    tick() {
+        this.view.updateTimeInfo(this.clock.getValueString());
+    }
+    ;
 }
 //# sourceMappingURL=Game.js.map

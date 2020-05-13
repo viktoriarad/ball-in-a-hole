@@ -1,6 +1,7 @@
 export class Clock {
-    constructor() {
+    constructor(game) {
         this.intervalId = -1;
+        this.game = game;
         this.value = { hours: 0, minutes: 0, seconds: 0 };
     }
     ;
@@ -20,6 +21,7 @@ export class Clock {
             this.value.minutes = 0;
             this.value.hours += 1;
         }
+        this.game.tick();
     }
     ;
     /**

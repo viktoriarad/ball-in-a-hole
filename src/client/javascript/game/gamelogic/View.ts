@@ -1,8 +1,9 @@
-import { IView, IGame, IBall, ICircle, IStar, IGameObjects } from "../interfaces/gameobjects.js";
+import { IBall, ICircle, IStar, IGameObjects } from "../interfaces/gameobjects.js";
+import { Game } from "../Game.js";
 import { Size, record } from "../interfaces/gametypes.js";
 
-export class View implements IView {
-  private readonly game: IGame;
+export class View {
+  private readonly game: Game;
   private readonly canvas: HTMLCanvasElement;
   private readonly ctx: CanvasRenderingContext2D;
   private readonly body: HTMLBodyElement;
@@ -18,11 +19,10 @@ export class View implements IView {
   private readonly bestScore: HTMLElement;
   private readonly levelInfo: HTMLElement;
   private readonly pauseButton: HTMLElement;
-  private readonly restartButton: HTMLElement;
   private readonly startGameBtn: HTMLElement;
 
-  constructor(_game: IGame, _fieldSize: Size) {
-    this.game = _game;
+  constructor(game: Game, _fieldSize: Size) {
+    this.game = game;
     this.fieldSize = _fieldSize;
     this.body = <HTMLBodyElement>document.body;
 
@@ -92,15 +92,12 @@ export class View implements IView {
     this.levelInfo = this.createHTMLElement("div", "level-info");
     this.pauseButton = this.createHTMLElement("div", "pause-button");
     this.addEventListener(this.pauseButton, "click", this.onClickPause.bind(this));
-    this.restartButton = this.createHTMLElement("div", "restart-button");
-    this.addEventListener(this.pauseButton, "click", this.onClickRestart.bind(this));
 
     this.addHTMLElement(this.gamePanel, this.scoreInfo);
     this.addHTMLElement(this.gamePanel, this.bestScore);
     this.addHTMLElement(this.gamePanel, this.timeInfo);
     this.addHTMLElement(this.gamePanel, this.levelInfo);
     this.addHTMLElement(this.gamePanel, this.pauseButton);
-    this.addHTMLElement(this.gamePanel, this.restartButton);
 
     this.addHTMLElement(this.body, this.gamePanel);
   };
@@ -222,14 +219,6 @@ export class View implements IView {
   private onClickPause(): void {
     this.onPause();
     this.game.pause();
-  }
-
-  /**
-   * Funkcja oblsuguje event klekniecia przycisku restart
-   * @returns {void}
-   */
-  private onClickRestart(): void {
-    this.game.restart();
   }
 
   /**

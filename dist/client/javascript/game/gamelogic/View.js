@@ -1,6 +1,6 @@
 export class View {
-    constructor(_game, _fieldSize) {
-        this.game = _game;
+    constructor(game, _fieldSize) {
+        this.game = game;
         this.fieldSize = _fieldSize;
         this.body = document.body;
         this.canvas = this.createHTMLElement("canvas");
@@ -56,14 +56,11 @@ export class View {
         this.levelInfo = this.createHTMLElement("div", "level-info");
         this.pauseButton = this.createHTMLElement("div", "pause-button");
         this.addEventListener(this.pauseButton, "click", this.onClickPause.bind(this));
-        this.restartButton = this.createHTMLElement("div", "restart-button");
-        this.addEventListener(this.pauseButton, "click", this.onClickRestart.bind(this));
         this.addHTMLElement(this.gamePanel, this.scoreInfo);
         this.addHTMLElement(this.gamePanel, this.bestScore);
         this.addHTMLElement(this.gamePanel, this.timeInfo);
         this.addHTMLElement(this.gamePanel, this.levelInfo);
         this.addHTMLElement(this.gamePanel, this.pauseButton);
-        this.addHTMLElement(this.gamePanel, this.restartButton);
         this.addHTMLElement(this.body, this.gamePanel);
     }
     ;
@@ -184,13 +181,6 @@ export class View {
     onClickPause() {
         this.onPause();
         this.game.pause();
-    }
-    /**
-     * Funkcja oblsuguje event klekniecia przycisku restart
-     * @returns {void}
-     */
-    onClickRestart() {
-        this.game.restart();
     }
     /**
      * Funkcja oblsuguje event nacisniecia komunikata z przegranej

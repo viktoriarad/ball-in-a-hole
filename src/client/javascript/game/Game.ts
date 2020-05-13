@@ -1,23 +1,23 @@
-import { IBall, IFinish, IStar, IView, IDevice, ITraps, IState, IGame, IGameObjects, IClock } from "./interfaces/gameobjects.js";
-import { Size, Orientation, Position } from "./interfaces/gametypes.js";
+import { IGameObjects } from "./interfaces/gameobjects.js";
+import { Size, Orientation, Position, record } from "./interfaces/gametypes.js";
 import { Device, View, State, Server } from './gamelogic/index.js';
 import { Ball, Finish, Traps, Star, Clock } from './gameobjects/index.js';
 
-export class Game implements IGame {
+export class Game {
 
   private readonly server: Server;
-  private readonly device: IDevice;
+  private readonly device: Device;
   private fieldSize: Size;
-  private readonly view: IView;
-  private readonly ball: IBall;
-  private readonly finish: IFinish;
-  private readonly star: IStar;
-  private readonly traps: ITraps;
-  private state: IState;
+  private readonly view: View;
+  private readonly ball: Ball;
+  private readonly finish: Finish;
+  private readonly star: Star;
+  private readonly traps: Traps;
+  private state: State;
   private level: number;
   private bonus: boolean = true;
   private score: number = 0;
-  private clock: IClock;
+  private clock: Clock;
 
   constructor(ballRadius: number) {
     this.server = new Server(this);
@@ -30,7 +30,7 @@ export class Game implements IGame {
     this.star = new Star(ballRadius);
     this.finish = new Finish(ballRadius);
     this.traps = new Traps(ballRadius);
-    this.clock = new Clock();
+    this.clock = new Clock(this);
 
     this.state = new State();
     this.level = 0;
@@ -317,11 +317,22 @@ export class Game implements IGame {
     if (!this.state.isActive()) return;
 
     const objectsToRender: IGameObjects = this.getGameObjects();
-    this.view.updateTimeInfo(this.clock.getValueString());
     this.view.render(objectsToRender);
   };
 
-  public onServerMessage(data: string): void {
-    console.log(data);
-  }
+  /**
+   * Funkcja updejtuje najlepszy wynik losowego gracza.
+   * @returns {void}
+   */
+  public onServerMessage(data: record): void {
+    this.view.updateBestScoreInfo(data);
+  };
+
+  /**
+   * Funkcja updejtuje czas na zegarku co sekunde.
+   * @returns {void}
+   */
+  public tick(): void {
+    this.view.updateTimeInfo(this.clock.getValueString());
+  };
 }

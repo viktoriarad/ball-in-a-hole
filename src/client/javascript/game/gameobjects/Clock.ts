@@ -1,11 +1,14 @@
 import { Time } from '../interfaces/gametypes.js';
 import { IClock } from '../interfaces/gameobjects.js';
+import { Game } from "../Game.js";
 
 export class Clock implements IClock {
   private value: Time;
   private intervalId: number = -1;
+  private game: Game;
 
-  constructor() {
+  constructor(game: Game) {
+    this.game = game;
     this.value = { hours: 0, minutes: 0, seconds: 0 };
   };
 
@@ -23,6 +26,8 @@ export class Clock implements IClock {
       this.value.minutes = 0;
       this.value.hours += 1;
     }
+
+    this.game.tick();
   };
 
   /**

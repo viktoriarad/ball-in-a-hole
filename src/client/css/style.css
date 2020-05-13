@@ -217,7 +217,7 @@ body {
     line-height: 30px;
 }
 
-.restart {
+.restart-button {
     width: 30px;
     height: 30px;
     text-align: center;
@@ -225,7 +225,7 @@ body {
     font-size: 25px;
 }
 
-.restart::before {
+.restart-button::before {
     content: 'Restart';
     color: white;
     font-size: 25px;

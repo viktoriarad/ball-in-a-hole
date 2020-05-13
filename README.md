@@ -4,7 +4,7 @@
 
 </div>
 
-Live version: [click here](https://viktoriarad.github.io/ball-in-a-hole/)
+Live version: [click here](https://game.viktoriarad.com)
 
 ### Opis gry:
 Gra na smartphone, jedna piłka wiele dziurek. Przejście kulką przez całe pole dziur tak aby trafić w potrzebną. Z każdym kolejnym levelem sterowanie piłką będzie coraz trudniejsze.
